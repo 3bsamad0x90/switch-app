@@ -48,11 +48,17 @@ Route::group(['prefix'=>'AdminPanel','middleware'=>['isAdmin','auth']], function
         Route::get('/{key}/deletePhoto','admin\SettingsController@deleteSettingPhoto')->name('admin.settings.deletePhoto');
     });
 
-    Route::group(['prefix'=>'applications'], function(){
+    Route::group(['prefix'=>'applications/social'], function(){
         Route::get('/','admin\socialMediaController@index')->name('admin.socialMedia');
         Route::post('/create','admin\socialMediaController@store')->name('admin.socialMedia.store');
         Route::post('/{id}/edit','admin\socialMediaController@update')->name('admin.socialMedia.update');
         Route::get('/{id}/delete','admin\socialMediaController@delete')->name('admin.socialMedia.delete');
+    });
+    Route::group(['prefix'=>'applications/music'], function(){
+        Route::get('/','admin\MusicController@index')->name('admin.Music');
+        Route::post('/create','admin\MusicController@store')->name('admin.Music.store');
+        Route::post('/{id}/edit','admin\MusicController@update')->name('admin.Music.update');
+        Route::get('/{id}/delete','admin\MusicController@delete')->name('admin.Music.delete');
     });
 
 

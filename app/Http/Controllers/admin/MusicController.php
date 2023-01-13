@@ -5,23 +5,23 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\appStoreRequest;
 use App\Http\Requests\appUpdateRequest;
-use App\SocialMedia;
+use App\Music;
 use Illuminate\Http\Request;
 use Response;
 
-class socialMediaController extends Controller
+class MusicController extends Controller
 {
     public function index()
     {
-        $apps = SocialMedia::paginate(10);
-        return view('AdminPanel.Apps.SocialMedia.index',[
-            'active' => 'SocialMedia',
-            'title' => 'تطبيقات السوشيال ميديا',
+        $apps = Music::paginate(10);
+        return view('AdminPanel.Apps.Music.index',[
+            'active' => 'Music',
+            'title' => 'تطبيقات الأغاني',
             'apps' => $apps,
             'breadcrumbs' => [
                 [
                     'url' => '',
-                    'text' => 'تطبيقات السوشيال ميديا'
+                    'text' => 'تطبيقات الأغاني'
                 ]
             ]
         ]);
@@ -29,10 +29,12 @@ class socialMediaController extends Controller
 
     public function store(appStoreRequest $request){
 
-        $imageName = time().'.'.$request->icon->extension();
-        $request->icon->move(public_path('uploads/apps/social'), $imageName);
+        if($request->hasFile('icon')){
+            $imageName = time().'.'.$request->icon->extension();
+            $request->icon->move(public_path('uploads/apps/music'), $imageName);
+        }
 
-        $app = new SocialMedia();
+        $app = new Music();
         $app->appName_ar = trim($request->appName_ar);
         $app->appName_en = trim($request->appName_en);
         $app->icon = $imageName;
@@ -45,18 +47,18 @@ class socialMediaController extends Controller
     }
     public function update(appUpdateRequest $request, $id){
 
-        $app = SocialMedia::findOrFail($id);
+        $app = Music::findOrFail($id);
         $app->appName_ar = trim($request->appName_ar);
         $app->appName_en = trim($request->appName_en);
         if($request->hasFile('icon')){
-            if($app->icon != '' || file_exists(public_path('uploads/apps/social/'. $app->icon))){
-                unlink(public_path('uploads/apps/social/'. $app->icon));
+            if($app->icon != '' || file_exists(public_path('uploads/apps/music/'. $app->icon))){
+                unlink(public_path('uploads/apps/music/'. $app->icon));
             }
-            $app['icon'] = upload_image_without_resize('apps/social', $request->icon );
+            $app['icon'] = upload_image_without_resize('apps/music', $request->icon );
         }
         $data = $app->update();
         if ($data) {
-            return redirect()->route('admin.socialMedia')
+            return redirect()->route('admin.Music')
                             ->with('success','تم تعديل البيانات بنجاح');
         } else {
             return redirect()->back()
@@ -65,9 +67,9 @@ class socialMediaController extends Controller
     }
     public function delete($id)
     {
-        $app = SocialMedia::find($id);
-        if($app->icon != '' || file_exists(public_path('uploads/apps/social/'. $app->icon))){
-            unlink(public_path('uploads/apps/social/'. $app->icon));
+        $app = Music::find($id);
+        if($app->icon != '' || file_exists(public_path('uploads/apps/music/'. $app->icon))){
+            unlink(public_path('uploads/apps/music/'. $app->icon));
         }
         if ($app->delete()) {
             return Response::json($id);

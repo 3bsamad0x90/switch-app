@@ -63,10 +63,10 @@
                             </span>
                         </a>
                     </li>
-                    <li @if(isset($active) && $active == 'sections') class="active" @endif>
-                        <a class="d-flex align-items-center" href="#">
+                    <li @if(isset($active) && $active == 'Music') class="active" @endif>
+                        <a class="d-flex align-items-center" href="{{ route('admin.Music') }}">
                             <i data-feather="circle"></i>
-                            <span class="menu-item text-truncate" data-i18n="{{trans('common.sections')}}">
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.Music')}}">
                                 تطبيقات الأغاني
                             </span>
                         </a>

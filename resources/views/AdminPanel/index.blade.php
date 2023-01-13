@@ -37,7 +37,7 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card bg-primary text-white text-center">
                             <div class="card-body">
-                                <a href="{{route('admin.apps.socialMedia')}}" class="text-white">
+                                <a href="{{route('admin.socialMedia')}}" class="text-white">
                                      التطبيقات
                                 </a>
                             </div>

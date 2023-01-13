@@ -68,7 +68,7 @@
                                     <div class="text-center mb-2">
                                         <h1 class="mb-1">تعديل</h1>
                                     </div>
-                                    {{Form::open(['url'=>route('admin.socialMedia.update',['id'=>$app->id]), 'id'=>'editappForm', 'class'=>'row gy-1 pt-75','files'=>'true'])}}
+                                    {{Form::open(['url'=>route('admin.Music.update',['id'=>$app->id]), 'id'=>'editappForm', 'class'=>'row gy-1 pt-75','files'=>'true'])}}
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="appName_ar">إسم التطبيق بالعربية</label>
                                             {{Form::text('appName_ar',$app->appName_ar,['id'=>'appName_ar', 'class'=>'form-control'])}}
@@ -124,7 +124,7 @@
                     <div class="text-center mb-2">
                         <h1 class="mb-1">إضافة جديد</h1>
                     </div>
-                    {{Form::open(['url'=>route('admin.socialMedia.store'), 'id'=>'createappForm', 'class'=>'row gy-1 pt-75', 'files'=>'true'])}}
+                    {{Form::open(['url'=>route('admin.Music.store'), 'id'=>'createappForm', 'class'=>'row gy-1 pt-75', 'files'=>'true'])}}
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="appName_ar">إسم التطبيق بالعربية</label>
                             {{Form::text('appName_ar','',['id'=>'appName_ar', 'class'=>'form-control'])}}
