@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\appStoreRequest;
+use App\Http\Requests\appUpdateRequest;
 use App\SocialMedia;
 use Illuminate\Http\Request;
 use Response;
@@ -12,7 +14,7 @@ class socialMediaController extends Controller
     public function index()
     {
         $apps = SocialMedia::paginate(10);
-        return view('AdminPanel.SocialMedia.index',[
+        return view('AdminPanel.Apps.SocialMedia.index',[
             'active' => 'SocialMedia',
             'title' => 'تطبيقات السوشيال ميديا',
             'apps' => $apps,
@@ -25,19 +27,7 @@ class socialMediaController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'appName_ar' => 'required',
-            'appName_en' => 'required',
-            'icon' => 'required|image|mimes:png|max:2048',
-        ],[
-            'appName_ar.required' => 'يجب ادخال اسم التطبيق بالعربية',
-            'appName_en.required' => 'يجب ادخال اسم التطبيق بالانجليزية',
-            'icon.required' => 'يجب ادخال الايقونة',
-            'icon.image' => 'يجب ان تكون الايقونة صورة',
-            'icon.mimes' => 'يجب ان تكون الايقونة بصيغة png',
-            'icon.max' => 'يجب ان لا تزيد الايقونة عن 2 ميجا',
-        ]);
+    public function store(appStoreRequest $request){
 
         $imageName = time().'.'.$request->icon->extension();
         $request->icon->move(public_path('uploads/apps/social'), $imageName);
@@ -53,19 +43,8 @@ class socialMediaController extends Controller
             return redirect()->back()->with('faild','لم نستطع حفظ البيانات');
         }
     }
-    public function update(Request $request, $id){
-        $request->validate([
-            'appName_ar' => 'required',
-            'appName_en' => 'required',
-            'icon' => 'image|mimes:png|max:2048',
-        ],
-        [
-            'appName_ar.required' => 'يجب ادخال اسم التطبيق بالعربية',
-            'appName_en.required' => 'يجب ادخال اسم التطبيق بالانجليزية',
-            'icon.image' => 'يجب ان تكون الايقونة صورة',
-            'icon.mimes' => 'يجب ان تكون الايقونة بصيغة png',
-            'icon.max' => 'يجب ان لا تزيد الايقونة عن 2 ميجا',
-        ]);
+    public function update(appUpdateRequest $request, $id){
+
         $app = SocialMedia::findOrFail($id);
         $data = $request->except(['_token', 'icon']);
         if($request->hasFile('icon')){
