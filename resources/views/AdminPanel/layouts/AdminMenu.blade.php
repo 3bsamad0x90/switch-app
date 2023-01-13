@@ -47,13 +47,47 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item @if(isset($active) && $active == 'apps') active @endif">
-                <a class="d-flex align-items-center" href="{{ route('admin.apps.socialMedia') }}">
-                    <i data-feather='smile'></i>
+            <li class=" nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="smile"></i>
                     <span class="menu-title text-truncate" data-i18n="{{trans('common.apps')}}">
                         التطبيقات
                     </span>
                 </a>
+                <ul class="menu-content">
+                    <li @if(isset($active) && $active == 'SocialMedia') class="active" @endif>
+                        <a class="d-flex align-items-center" href="{{ route('admin.socialMedia') }}">
+                            <i data-feather="circle"></i>
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.books')}}">
+                                تطبيقات السوشيال ميديا
+                            </span>
+                        </a>
+                    </li>
+                    <li @if(isset($active) && $active == 'sections') class="active" @endif>
+                        <a class="d-flex align-items-center" href="#">
+                            <i data-feather="circle"></i>
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.sections')}}">
+                                تطبيقات الأغاني
+                            </span>
+                        </a>
+                    </li>
+                    <li @if(isset($active) && $active == 'writers') class="active" @endif>
+                        <a class="d-flex align-items-center" href="#">
+                            <i data-feather="circle"></i>
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.writers')}}">
+                                تطبيقات تجارية
+                            </span>
+                        </a>
+                    </li>
+                    <li @if(isset($active) && $active == 'writers') class="active" @endif>
+                        <a class="d-flex align-items-center" href="#">
+                            <i data-feather="circle"></i>
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.writers')}}">
+                                تطبيقات كرييتف
+                            </span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item @if(isset($active) && $active == 'serialNumbers') active @endif">
                 <a class="d-flex align-items-center" href="{{ route('admin.SerialNumbers') }}">
