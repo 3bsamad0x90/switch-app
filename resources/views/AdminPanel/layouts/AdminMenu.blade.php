@@ -71,16 +71,16 @@
                             </span>
                         </a>
                     </li>
-                    <li @if(isset($active) && $active == 'writers') class="active" @endif>
-                        <a class="d-flex align-items-center" href="#">
+                    <li @if(isset($active) && $active == 'business') class="active" @endif>
+                        <a class="d-flex align-items-center" href="{{ route('admin.business') }}">
                             <i data-feather="circle"></i>
-                            <span class="menu-item text-truncate" data-i18n="{{trans('common.writers')}}">
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.business')}}">
                                 تطبيقات تجارية
                             </span>
                         </a>
                     </li>
                     <li @if(isset($active) && $active == 'writers') class="active" @endif>
-                        <a class="d-flex align-items-center" href="#">
+                        <a class="d-flex align-items-center" href="{{ route('admin.creative') }}">
                             <i data-feather="circle"></i>
                             <span class="menu-item text-truncate" data-i18n="{{trans('common.writers')}}">
                                 تطبيقات كرييتف

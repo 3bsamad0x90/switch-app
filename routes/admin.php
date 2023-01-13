@@ -60,6 +60,18 @@ Route::group(['prefix'=>'AdminPanel','middleware'=>['isAdmin','auth']], function
         Route::post('/{id}/edit','admin\MusicController@update')->name('admin.Music.update');
         Route::get('/{id}/delete','admin\MusicController@delete')->name('admin.Music.delete');
     });
+    Route::group(['prefix'=>'applications/business'], function(){
+        Route::get('/','admin\businessController@index')->name('admin.business');
+        Route::post('/create','admin\businessController@store')->name('admin.business.store');
+        Route::post('/{id}/edit','admin\businessController@update')->name('admin.business.update');
+        Route::get('/{id}/delete','admin\businessController@delete')->name('admin.business.delete');
+    });
+    Route::group(['prefix'=>'applications/creative'], function(){
+        Route::get('/','admin\creativeController@index')->name('admin.creative');
+        Route::post('/create','admin\creativeController@store')->name('admin.creative.store');
+        Route::post('/{id}/edit','admin\creativeController@update')->name('admin.creative.update');
+        Route::get('/{id}/delete','admin\creativeController@delete')->name('admin.creative.delete');
+    });
 
 
     Route::group(['prefix'=>'products'], function(){

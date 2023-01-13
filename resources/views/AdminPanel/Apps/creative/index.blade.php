@@ -40,7 +40,7 @@
                                     <a href="javascript:;" data-bs-target="#editapp{{$app->id}}" data-bs-toggle="modal" class="btn btn-icon btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{trans('common.edit')}}">
                                         <i data-feather='edit'></i>
                                     </a>
-                                    <?php $delete = route('admin.Music.delete',['id'=>$app->id]); ?>
+                                    <?php $delete = route('admin.creative.delete',['id'=>$app->id]); ?>
                                     <button type="button" class="btn btn-icon btn-danger" onclick="confirmDelete('{{$delete}}','{{$app->id}}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{trans('common.delete')}}">
                                         <i data-feather='trash-2'></i>
                                     </button>
@@ -68,7 +68,7 @@
                                     <div class="text-center mb-2">
                                         <h1 class="mb-1">تعديل</h1>
                                     </div>
-                                    {{Form::open(['url'=>route('admin.Music.update',['id'=>$app->id]), 'id'=>'editappForm', 'class'=>'row gy-1 pt-75','files'=>'true'])}}
+                                    {{Form::open(['url'=>route('admin.creative.update',['id'=>$app->id]), 'id'=>'editappForm', 'class'=>'row gy-1 pt-75','files'=>'true'])}}
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="appName_ar">إسم التطبيق بالعربية</label>
                                             {{Form::text('appName_ar',$app->appName_ar,['id'=>'appName_ar', 'class'=>'form-control'])}}
@@ -124,7 +124,7 @@
                     <div class="text-center mb-2">
                         <h1 class="mb-1">إضافة جديد</h1>
                     </div>
-                    {{Form::open(['url'=>route('admin.Music.store'), 'id'=>'createappForm', 'class'=>'row gy-1 pt-75', 'files'=>'true'])}}
+                    {{Form::open(['url'=>route('admin.creative.store'), 'id'=>'createappForm', 'class'=>'row gy-1 pt-75', 'files'=>'true'])}}
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="appName_ar">إسم التطبيق بالعربية</label>
                             {{Form::text('appName_ar','',['id'=>'appName_ar', 'class'=>'form-control'])}}
