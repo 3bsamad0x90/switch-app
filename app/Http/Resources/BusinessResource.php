@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductsResource extends JsonResource
+class BusinessResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,8 @@ class ProductsResource extends JsonResource
         $lang = $request->header('lang');
         return [
             'id' => $this->id,
-            'productName' => $this['productName_'.$lang] != '' ? $this['productName_'.$lang] : $this['productName_en'],
-            'price' => $this['price'],
-            'image' => asset('public/uploads/products/'.$this->id.'/'.$this->image),
+            'name' => $this['appName_'.$lang],
+            'icon' => asset('public/uploads/apps/business/'.$this->icon)
         ];
     }
 }

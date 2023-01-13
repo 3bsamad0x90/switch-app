@@ -25,7 +25,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:api', 'auth:sanctum']], function(){
     Route::get('/products', 'api\ProductsController@index');
     Route::post('/makeorder', 'api\OrdersController@index');
-    Route::get('/apps', 'api\AppsController@index');
+    Route::get('/social', 'api\AppsController@social');
+    Route::get('/music', 'api\AppsController@music');
+    Route::get('/creative', 'api\AppsController@creative');
+    Route::get('/business', 'api\AppsController@business');
 });
 
 
