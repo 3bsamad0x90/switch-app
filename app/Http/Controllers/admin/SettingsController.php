@@ -61,18 +61,6 @@ class SettingsController extends Controller
                 $setting->update();
             }
         }
-        if (!isset($request['closeSite'])) {
-            $setting = Settings::where('key', 'closeSite')->first();
-            if ($setting == '') {
-                $setting = New Settings;
-                $setting->key = 'closeSite';
-                $setting->save();
-            }
-            $setting->value = '0';
-            $setting->update();
-        }
-
-    
 
         //foreach inputs which is file
         foreach ($_FILES as $key => $value) {

@@ -35,7 +35,7 @@ class LoginController extends Controller
         if ( auth()->user()->role == '1') {
             return route('admin.index');
         } else {
-            return route('publisher.index');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -59,15 +59,11 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(['email'=>$input['email'],'password'=>$input['password']])) {
-            if (auth()->user()->checkActive() != '1') {
-                session()->put('faild',auth()->user()->checkActive());
-                auth()->logout();
-                return redirect()->back()->withInput();
-            }
             if (auth()->user()->role == '1') {
                 return redirect()->route('admin.index');
             }
-            return redirect()->route('publisher.index');
+            session()->put('faild',trans('auth.failed'));
+            return redirect()->back()->withInput();
         } else {
             session()->put('faild',trans('auth.failed'));
             return redirect()->back()->withInput();

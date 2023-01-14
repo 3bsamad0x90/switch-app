@@ -57,7 +57,7 @@
                 <ul class="menu-content">
                     <li @if(isset($active) && $active == 'SocialMedia') class="active" @endif>
                         <a class="d-flex align-items-center" href="{{ route('admin.socialMedia') }}">
-                            <i data-feather="circle"></i>
+                            <i data-feather="aperture"></i>
                             <span class="menu-item text-truncate" data-i18n="{{trans('common.books')}}">
                                 تطبيقات السوشيال ميديا
                             </span>
@@ -65,7 +65,7 @@
                     </li>
                     <li @if(isset($active) && $active == 'Music') class="active" @endif>
                         <a class="d-flex align-items-center" href="{{ route('admin.Music') }}">
-                            <i data-feather="circle"></i>
+                            <i data-feather="headphones"></i>
                             <span class="menu-item text-truncate" data-i18n="{{trans('common.Music')}}">
                                 تطبيقات الأغاني
                             </span>
@@ -73,16 +73,16 @@
                     </li>
                     <li @if(isset($active) && $active == 'business') class="active" @endif>
                         <a class="d-flex align-items-center" href="{{ route('admin.business') }}">
-                            <i data-feather="circle"></i>
+                            <i data-feather="briefcase"></i>
                             <span class="menu-item text-truncate" data-i18n="{{trans('common.business')}}">
                                 تطبيقات تجارية
                             </span>
                         </a>
                     </li>
-                    <li @if(isset($active) && $active == 'writers') class="active" @endif>
+                    <li @if(isset($active) && $active == 'creative') class="active" @endif>
                         <a class="d-flex align-items-center" href="{{ route('admin.creative') }}">
-                            <i data-feather="circle"></i>
-                            <span class="menu-item text-truncate" data-i18n="{{trans('common.writers')}}">
+                            <i data-feather="command"></i>
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.creative')}}">
                                 تطبيقات كرييتف
                             </span>
                         </a>

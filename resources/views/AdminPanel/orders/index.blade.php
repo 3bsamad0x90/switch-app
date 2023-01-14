@@ -23,9 +23,12 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
+                            @php
+                                $id = 0;
+                            @endphp
                             @forelse($orders as $order)
                                 <tr id="row_{{$order->id}}">
-                                    <td>{{$order->id}}</td>
+                                    <td>{{++$id}}</td>
                                     <td>
                                         @foreach ($order->products as $product)
                                             {{$product->productName_ar}}<br/>
@@ -33,7 +36,13 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <b class="text-success">{{$order->status}}</b>
+                                        @if($order->status == 'pending')
+                                            <b class="text-warning">{{$order->status}}</b>
+                                        @elseif($order->status == 'done')
+                                            <b class="text-success">{{$order->status}}</b>
+                                        @elseif($order->status == 'review')
+                                            <b class="text-danger">{{$order->status}}</b>
+                                        @endif
                                     </td>
                                     <td>
                                         @foreach ($order->products as $product)
@@ -41,9 +50,7 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                     {{ $order->user->name }}<br>
-                                     {{ $order->created_at }}<br>
-                                     {{ date('Y-m-d',strtotime($order->created_at)) }}
+                                     {{ $order->user->name }}
 
                                     </td>
                                 </tr>
@@ -58,7 +65,7 @@
                     </table>
                 </div>
 
-                {{-- {{$orders->links('vendor.pagination.default') }} --}}
+                {{$orders->links('vendor.pagination.default') }}
 
 
             </div>
@@ -89,7 +96,12 @@
 
                         <div class="col-12 col-md-4">
                             <label class="form-label" for="status">حالة الطلب</label>
-                            {{Form::text('status',isset($_GET['status']) ? $_GET['status'] : '',['id'=>'status', 'class'=>'form-control'])}}
+                            {{ Form::select('status', [
+                                '' => 'All',
+                                'pending' => 'Pending',
+                                'done' => 'Done',
+                                'review' => 'Review',
+                            ],isset($_GET['status']) ? $_GET['status'] : '', ['id'=>'status', 'class'=>'form-control']) }}
                         </div>
                         <div class="col-12 col-md-4">
                             <label class="form-label" for="from_date">{{trans('common.from_date')}}</label>
