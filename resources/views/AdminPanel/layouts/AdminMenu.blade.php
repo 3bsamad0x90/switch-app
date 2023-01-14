@@ -1,15 +1,9 @@
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
-    <div class="navbar-header">
-        <ul class="nav navbar-nav flex-row">
-            <img src="{{asset('/AdminAssets/app-assets/images/logo/logo.png')}}" width="90%" />
-            <!-- <li class="nav-item nav-toggle">
-                <a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse">
-                    <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
-                    <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i>
-                </a>
-            </li> -->
-        </ul>
+    <div class="navbar-header text-center d-flex justify-content-center">
+        
+            <img src="{{asset(getSettingImageLink('logo'))}}" width="50%" />
+        
     </div>
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">

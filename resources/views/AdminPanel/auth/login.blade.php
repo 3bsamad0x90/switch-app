@@ -11,7 +11,7 @@
     <meta name="author" content="PIXINVENT">
     <title>{{$title}}</title>
     <link rel="apple-touch-icon" href="{{asset('/AdminAssets/app-assets/images/ico/apple-icon-120.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('/AdminAssets/app-assets/images/ico/favicon.ico')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset(getSettingImageLink('logo'))}}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
@@ -57,8 +57,8 @@
                         <!-- Login basic -->
                         <div class="card mb-0">
                             <div class="card-body">
-                                <a href="https://ilawfair.com" class="brand-logo">
-                                    <img src="{{asset('/AdminAssets/app-assets/images/logo/logo.png')}}" width="90%" />
+                                <a href="#" class="brand-logo">
+                                    <img src="{{asset(getSettingImageLink('logo'))}}" width="80%" />
                                 </a>
 
                                 <h4 class="card-title mb-1 text-center">{{trans('common.Admin Panel')}}</h4>
