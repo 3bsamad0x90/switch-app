@@ -21,5 +21,8 @@ return [
     'allYourNotificationsHasMarkedAsRead' => 'تم تعيين كافة الإشعارات كمقروء',
     'youHaveEnteredReviewBefore' => 'لديك تقييم لنفس الكتاب بالفعل',
     'activateMyAccount' => 'تفعيل الحساب',
-    'Regards' => 'تحياتنا'
+    'Regards' => 'تحياتنا',
+    'page_title' => 'عنوان الصفحة',
+    'url' => 'الرابط',
+    'type' => 'النوع',
 ];
