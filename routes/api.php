@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth:api', 'auth:sanctum']], function(){
     Route::get('/creative', 'api\AppsController@creative');
     Route::get('/business', 'api\AppsController@business');
     Route::post('/addAccount', 'api\AccountsController@addAccount');
+
+    Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
 });
 
 

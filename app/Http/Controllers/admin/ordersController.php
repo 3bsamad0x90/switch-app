@@ -40,26 +40,5 @@ class ordersController extends Controller
                 ]
             ]
         ]);
-
-    }
-    public function details($id)
-    {
-
-        $order = Orders::find($id);
-        return view('AdminPanel.orders.details', [
-            'title' => trans('common.orders'),
-            'active' => 'order',
-            'order' => $order,
-            'breadcrumbs' => [
-                [
-                    'url' => route('publisher.orders'),
-                    'text' => trans('common.orders')
-                ],
-                [
-                    'url' => '',
-                    'text' => trans('common.order').': #'.$id
-                ]
-            ]
-        ]);
     }
 }

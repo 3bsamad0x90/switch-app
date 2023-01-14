@@ -88,7 +88,6 @@ Route::group(['prefix'=>'AdminPanel','middleware'=>['isAdmin','auth']], function
     });
     Route::group(['prefix'=>'orders'], function(){
         Route::get('/','admin\ordersController@index')->name('admin.orders');
-        Route::get('/{id}/details','admin\ordersController@details')->name('admin.orders.details');
         Route::post('/create','admin\ordersController@store')->name('admin.orders.store');
         Route::post('/{id}/edit','admin\ordersController@update')->name('admin.orders.update');
         Route::get('/{id}/delete','admin\ordersController@delete')->name('admin.orders.delete');

@@ -23,18 +23,17 @@ class ContactMessagesController extends Controller
         }
 
         $rules = [
-                    'name' => 'required',
+                    'name' => 'required|string',
                     'email' => 'required|email',
-                    'phone' => 'required',
-                    'country' => 'required',
-                    'content' => 'required'
+                    'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
+                    'content' => 'required|string'
                 ];
         $validator=Validator::make($request->all(),$rules);
         if($validator->fails())
         {
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
-                    'status' => 'faild',
+                    'status' => 'failed',
                     'message' => trans('api.pleaseRecheckYourDetails'),
                     'data' => $error
                 ]);
@@ -52,7 +51,7 @@ class ContactMessagesController extends Controller
             ];
         } else {
             $resArr = [
-                'status' => 'faild',
+                'status' => 'failed',
                 'message' => trans('api.someThingWentWrong'),
                 'data' => []
             ];
