@@ -123,5 +123,14 @@ class AuthinticationController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function logout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Logged In Successfully'
+        ], Response::HTTP_OK);
+    }
 
 }

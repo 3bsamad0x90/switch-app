@@ -17,7 +17,9 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->string('page_title');
             $table->string('url')->unique();
-            $table->string('type');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('category_name');
+            $table->string('type_id');
             $table->timestamps();
         });
     }

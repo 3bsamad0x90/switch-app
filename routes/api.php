@@ -22,20 +22,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['middleware' => ['auth:api', 'auth:sanctum']], function(){
-    Route::get('/products', 'api\ProductsController@index');
+Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/makeorder', 'api\OrdersController@index');
+    Route::get('/products', 'api\ProductsController@index');
     Route::get('/social', 'api\AppsController@social');
     Route::get('/music', 'api\AppsController@music');
     Route::get('/creative', 'api\AppsController@creative');
     Route::get('/business', 'api\AppsController@business');
     Route::post('/addAccount', 'api\AccountsController@addAccount');
-
+    Route::get('/show', 'api\AccountsController@showAccount');
     Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
+
+    Route::post('/logout', 'api\AuthinticationController@logout');
 });
 
 
-Route::get('/webproducts', 'api\ProductsController@webproducts')->middleware('auth:api');
+
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Accounts;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\showAccountResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,7 +23,9 @@ class AccountsController extends Controller
         $rules = [
             'page_title' => 'required|string',
             'url' => 'required|url',
-            'type' => 'required',
+            'type_id' => 'required',
+            'user_id' => 'required',
+            'category_name' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails())
@@ -51,5 +54,29 @@ class AccountsController extends Controller
             ];
         }
         return response()->json($resArr);
+    }
+
+    public function showAccount(Request $request){
+        $lang = $request->header('lang');
+        if($lang == ''){
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        $accounts = Accounts::all();
+        if(!$accounts){
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.yourDataHasBeenSentFailed'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }else{
+            return response()->json(showAccountResource::collection($accounts));
+        }
+
     }
 }
