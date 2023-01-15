@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\users\CreateUser;
+use App\Http\Resources\UserResource;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class AuthinticationController extends Controller
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
-                'user_id' => $user->id
+                'user' => new UserResource($user)
             ], 200);
 
         } catch (\Throwable $th) {
@@ -113,7 +114,8 @@ class AuthinticationController extends Controller
                 'status' => true,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
-                'user_id' => $user->id
+                // 'user_id' => $user->id,
+                'user' => new UserResource($user)
             ], Response::HTTP_OK);
 
         } catch (\Throwable $th) {
