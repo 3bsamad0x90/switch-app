@@ -59,7 +59,8 @@ class AuthinticationController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'user_id' => $user->id
             ], 200);
 
         } catch (\Throwable $th) {
@@ -111,7 +112,8 @@ class AuthinticationController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'user_id' => $user->id
             ], Response::HTTP_OK);
 
         } catch (\Throwable $th) {

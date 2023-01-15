@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:api', 'auth:sanctum']], function(){
 });
 
 
+Route::get('/webproducts', 'api\ProductsController@webproducts')->middleware('auth:api');
 
 
 
