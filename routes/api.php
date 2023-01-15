@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/show', 'api\AccountsController@showAccount');
     Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
 
+    //edit account
+    Route::get('/editAccount/{user}', 'api\AccountsController@editAccount');
+    Route::post('/updateAccount/{user}', 'api\AccountsController@updateAccount');
     Route::post('/logout', 'api\AuthinticationController@logout');
 });
 

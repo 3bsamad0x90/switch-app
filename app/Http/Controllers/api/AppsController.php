@@ -30,7 +30,7 @@ class AppsController extends Controller
         if(!$social){
             return response()->json(['status' => 'No Data', Response::HTTP_NOT_FOUND]);
         }
-        return response()->json(['status'=> 'Success', 'social'=>SocialMediaResource::collection($social)], Response::HTTP_OK);
+        return response()->json(['status'=> 'Success', 'item'=>SocialMediaResource::collection($social)], Response::HTTP_OK);
     }
 
     public function music(Request $request){
@@ -49,7 +49,7 @@ class AppsController extends Controller
         if(!$music){
             return response()->json(['status' => 'No Data', Response::HTTP_NOT_FOUND]);
         }
-        return response()->json(['status'=> 'Success', 'music'=>MusicResource::collection($music)], Response::HTTP_OK);
+        return response()->json(['status'=> 'Success', 'item'=>MusicResource::collection($music)], Response::HTTP_OK);
 
     }
     public function creative(Request $request){
@@ -66,7 +66,7 @@ class AppsController extends Controller
         if(!$creative){
             return response()->json(['status' => 'No Data', Response::HTTP_NOT_FOUND]);
         }
-        return response()->json(['status'=> 'Success', 'creative'=>CreativeResource::collection($creative)], Response::HTTP_OK);
+        return response()->json(['status'=> 'Success', 'item'=>CreativeResource::collection($creative)], Response::HTTP_OK);
 
     }
     public function business(Request $request){
@@ -84,7 +84,7 @@ class AppsController extends Controller
         if(!$business){
             return response()->json(['status' => 'No Data', Response::HTTP_NOT_FOUND]);
         }
-        return response()->json(['status'=> 'Success', 'business'=>BusinessResource::collection($business)], Response::HTTP_OK);
+        return response()->json(['status'=> 'Success', 'item'=>BusinessResource::collection($business)], Response::HTTP_OK);
 
     }
 }

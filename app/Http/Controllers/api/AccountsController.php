@@ -4,7 +4,10 @@ namespace App\Http\Controllers\api;
 
 use App\Accounts;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\users\updateAccountRequest;
 use App\Http\Resources\showAccountResource;
+use App\Http\Resources\UserResource;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -77,6 +80,41 @@ class AccountsController extends Controller
         }else{
             return response()->json(showAccountResource::collection($accounts));
         }
+    }
+    public function editAccount(Request $request, User $user ){
+        $lang = $request->header('lang');
+        if($lang == ''){
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        if(!$user){
+            return $user;
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.yourDataHasBeenSentFailed'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }else{
+            return response()->json(new UserResource($user));
+        }
+    }
+
+    public function updateAccount(updateAccountRequest $request, User $user){
+        $lang = $request->header('lang');
+        if($lang == ''){
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+
 
     }
 }

@@ -20,5 +20,6 @@ return [
     'allYourNotificationsHasMarkedAsRead' => 'all Your Notifications Has Marked As Read',
     'youHaveEnteredReviewBefore' => 'You Have Entered Review Before',
     'activateMyAccount' => 'Activate My Account',
-    'Regards' => 'Regards'
+    'Regards' => 'Regards',
+    'yourDataHasBeenSentFailed' => 'your Data Has Been Sent Failed',
 ];
