@@ -39,8 +39,8 @@ class updateAccountRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '',
-            'familyName.required' => '',
+            'name.required' => trans('validation.name'),
+            'familyName.required' => trans('validation.familyName'),
             'job_title.required' => '',
             'email.required' => '',
             'email.unique' => '',

@@ -148,6 +148,7 @@ return [
 
     'attributes' => [
         'name' => 'الإسم',
+        'familyName' => 'الإسم العائلة',
         'email' => 'البريد الإلكتروني',
         'password' => 'كلمة المرور',
         'phone' => 'الهاتف',

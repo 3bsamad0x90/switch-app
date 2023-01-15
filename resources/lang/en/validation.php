@@ -148,6 +148,7 @@ return [
 
     'attributes' => [
         'name' => 'name',
+        'familyName' => 'family Name',
         'email' => 'email',
         'phone' => 'phone',
         'password' => 'password',
