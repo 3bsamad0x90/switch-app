@@ -100,21 +100,70 @@ class AccountsController extends Controller
             ];
             return response()->json($resArr);
         }else{
-            return response()->json(new UserResource($user));
+             return response()->json(['user' => new UserResource($user)]);
         }
     }
 
-    public function updateAccount(updateAccountRequest $request, User $user){
+    public function updateAccount(Request $request){
         $lang = $request->header('lang');
-        if($lang == ''){
-            $resArr = [
-                'status' => 'failed',
-                'message' => trans('api.pleaseSendLangCode'),
-                'data' => []
-            ];
-            return response()->json($resArr);
+        $user_id = $request->header('user_id');
+        if (checkUserForApi($lang, $user_id) !== true) {
+            return checkUserForApi($lang, $user_id);
+        }
+        $rules = [
+            'name' => 'nullable',
+            'familyName' => 'nullable',
+            'email' => 'nullable|email|unique:users,email,'.$user_id,
+            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|unique:users,phone,'.$user_id,
+            'job_title' => 'nullable|string|max:255',
+            'password' => 'nullable',
+            'bio' => 'nullable|string|max:255',
+            'image' => 'nullable|image',
+            'background_image' => 'nullable|image'
+        ];
+        $validator=Validator::make($request->all(),$rules);
+        if($validator->fails())
+        {
+            foreach ((array)$validator->errors() as $error) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('api.pleaseRecheckYourDetails'),
+                    'data' => $error
+                ]);
+            }
+        }
+        $data = $request->except(['_token','password','image','background_image']);
+        if ($request['password'] != '') {
+            $data['password'] = bcrypt($request['password']);
+        }
+        $user = User::find($user_id);
+        if ($request->image != '') {
+            if ($user->image != '') {
+                delete_image('users/'.$user->id , $user->image);
+            }
+            $data['image'] = upload_image_without_resize('users/'.$user->id , $request->image );
+        }
+        if ($request->background_image != '') {
+            if ($user->background_image != '') {
+                delete_image('users/'.$user->id , $user->background_image);
+            }
+            $data['background_image'] = upload_image_without_resize('users/'.$user->id , $request->background_image );
         }
 
+        if ($user->update($data)) {
+            $resArr = [
+                'status' => 'success',
+                'message' => trans('api.yourDataHasBeenSavedSuccessfully'),
+                'data' => $user->apiData($lang)
+            ];
+        } else {
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.someThingWentWrong'),
+                'data' => []
+            ];
+        }
+        return response()->json($resArr);
 
     }
 }

@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     //edit account
     Route::get('/editAccount/{user}', 'api\AccountsController@editAccount');
-    Route::post('/updateAccount/{user}', 'api\AccountsController@updateAccount');
+    Route::post('/updateAccount', 'api\AccountsController@updateAccount');
     Route::post('/logout', 'api\AuthinticationController@logout');
 });
 

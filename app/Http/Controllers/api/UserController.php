@@ -77,7 +77,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -106,7 +106,6 @@ class UserController extends Controller
         }
 
         $data = $request->except(['_token','password','photo']);
-        // $data['country'] = getCountryByIso($request->country)['id'];
         if ($request['password'] != '') {
             $data['password'] = bcrypt($request['password']);
         }
@@ -201,7 +200,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -249,7 +248,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -290,7 +289,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -317,7 +316,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -364,7 +363,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -391,7 +390,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -440,7 +439,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -458,7 +457,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -484,7 +483,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -531,7 +530,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -561,7 +560,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -613,7 +612,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }
@@ -640,7 +639,7 @@ class UserController extends Controller
     {
         $lang = $request->header('lang');
         $user_id = $request->header('user');
-        
+
         if (checkUserForApi($lang, $user_id) !== true) {
             return checkUserForApi($lang, $user_id);
         }

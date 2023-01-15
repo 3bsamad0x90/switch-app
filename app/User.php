@@ -52,15 +52,15 @@ class User extends Authenticatable
 
         return $image;
     }
-    public function licensePhotoLink()
+    public function backgroundPhotoLink()
     {
-        $image = asset('AdminAssets/app-assets/images/portrait/small/avatar.png');
+        // $image = asset('AdminAssets/app-assets/images/portrait/small/avatar.png');
 
-        if ($this->licensePhoto != '') {
-            $image = asset('uploads/users/'.$this->id.'/'.$this->licensePhoto);
+        if ($this->background_image != '') {
+            $image = asset('uploads/users/'.$this->id.'/'.$this->background_image);
+            return $image;
         }
 
-        return $image;
     }
     public function countryData()
     {
@@ -93,98 +93,28 @@ class User extends Authenticatable
         ];
         return $this->belongsTo(Cities::class,'city');
     }
-    public function addressList()
-    {
-        return $this->hasMany(UserAddress::class,'user_id');
-    }
-    public function paymentMethods()
-    {
-        return $this->hasMany(UserPaymentMethods::class,'user_id');
-    }
-    public function bookReviews()
-    {
-        return $this->hasMany(BookReviews::class,'user_id');
-    }
     public function favorites()
     {
         return $this->hasMany(UserFavorites::class,'user_id');
     }
-    public function apiData($lang,$details = null)
+    public function apiData($lang)
     {
         $data = [
             'id' => $this->id,
             'name' => $this->name,
-            'userName' => $this->userName,
+            'familyName' => $this->familyName,
             'email' => $this->email,
             'language' => $this->language,
             'phone' => $this->phone,
-            'address' => $this->address,
-            'about' => $this->about,
-            'photo' => $this->photoLink(),
+            'job_title' => $this->job_title,
+            'bio' => $this->bio,
+            'image' => $this->photoLink(),
+            'background_image' => $this->backgroundPhotoLink(),
         ];
-        if ($details != '') {
-            if ($this->publisherBooks()->count() > 0) {
-                $books = $this->publisherBooks;
-                $data['publisherBooks'] = [];
-                foreach ($books as $key => $value) {
-                    $data['publisherBooks'][] = $value->apiData($lang);
-                }
-            }
-        }
-
         return $data;
     }
 
-    public function publisherBooks()
-    {
-        return $this->hasMany(Books::class,'publisher_id');
-    }
 
-    public function checkActive()
-    {
-        $active = '1';
-        if ($this->active == '0') {
-            $active = trans('auth.yourAcountStillNotActive');
-        }
-        if ($this->block == '1') {
-            $active = trans('auth.yourAcountIsBlocked');
-        }
-        return $active;
-    }
-
-    public function publisherClients()
-    {
-        return $this->hasManyThrough(
-            'App\User',
-            'App\Orders',
-            'publisher_id', // Local key on users table...
-            'id' // Local key on users table...
-        );
-    }
-
-    public function sales()
-    {
-        return $this->hasMany(Orders::class,'publisher_id');
-    }
-    function mySales()
-    {
-        return $this->sales->where('status','done');
-    }
-
-    public function paymentsHistory()
-    {
-        return $this->hasMany(PublisherPaymentsHistory::class,'user_id');
-    }
-
-    public function currentBalance()
-    {
-        $sales = $this->mySales()->sum('total');
-        $payments = $this->paymentsHistory()->sum('amount');
-        return [
-            'balance' => $sales-$payments,
-            'balanceRate' => (($sales-$payments)/getSettingValue('MinimumForTransfeerMoney'))*100
-        ];
-    }
 
     public function myOrders()
     {
@@ -194,20 +124,6 @@ class User extends Authenticatable
     public function cart()
     {
         return $this->myOrders()->where('status','draft')->where('main_order_id',0)->first();
-    }
-    public function myCart($lang,$currency = null)
-    {
-        $myCart = $this->myOrders()->where('status','draft')->where('main_order_id',0)->first();
-        if ($myCart != '') {
-            foreach ($myCart->items as $key => $value) {
-                if ($value->book == '') {
-                    $item->delete();
-                }
-            }
-            return $myCart->apiData($lang,$currency);
-        } else {
-            return '';
-        }
     }
 
 }
