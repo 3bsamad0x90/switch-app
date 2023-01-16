@@ -25,7 +25,7 @@ class AccountsController extends Controller
         }
         $rules = [
             'page_title' => 'required|string',
-            'url' => 'required|url',
+            'url' => 'required|url|unique:accounts,url',
             'type_id' => 'required',
             'user_id' => 'required',
             'category_name' => 'required',
@@ -69,6 +69,7 @@ class AccountsController extends Controller
             ];
             return response()->json($resArr);
         }
+
         $accounts = Accounts::all();
         if(!$accounts){
             $resArr = [
