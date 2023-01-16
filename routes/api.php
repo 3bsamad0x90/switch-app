@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::get('/orders', 'api\OrdersController@orders');
     Route::post('/makeorder', 'api\OrdersController@index');
     Route::get('/products', 'api\ProductsController@index');
     Route::get('/social', 'api\AppsController@social');
