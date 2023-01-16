@@ -90,6 +90,7 @@ Route::group(['prefix'=>'AdminPanel','middleware'=>['isAdmin','auth']], function
         Route::get('/','admin\ordersController@index')->name('admin.orders');
         Route::post('/create','admin\ordersController@store')->name('admin.orders.store');
         Route::post('/{id}/edit','admin\ordersController@update')->name('admin.orders.update');
+        Route::post('/{id}/editStatus','admin\ordersController@statusUpdate')->name('admin.orders.statusUpdate');
         Route::get('/{id}/delete','admin\ordersController@delete')->name('admin.orders.delete');
     });
 

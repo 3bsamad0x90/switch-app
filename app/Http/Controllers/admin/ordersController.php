@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Orders;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Response;
 class ordersController extends Controller
 {
     public function index(){
@@ -40,5 +40,14 @@ class ordersController extends Controller
                 ]
             ]
         ]);
+    }
+    public function statusUpdate(Request $request, $id){
+        $order = Orders::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+        if ($order) {
+            return back()->with('success', 'تم تحديث حالة الطلب بنجاح');
+        }
+        return back()->with('faild', 'لم نستطع تحديث حالة الطلب');
     }
 }

@@ -19,7 +19,7 @@
                                 <th>الحالة</th>
                                 <th>السعر</th>
                                 <th>إسم المستخدم</th>
-                                {{-- <th class="text-center">{{ trans('common.actions') }}</th> --}}
+                                <th>الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -33,7 +33,6 @@
                                         @foreach ($order->products as $product)
                                             {{$product->productName_ar}}<br/>
                                             {{$product->productName_en}}
-                                        @endforeach
                                     </td>
                                     <td>
                                         @if($order->status == 'pending')
@@ -45,13 +44,17 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @foreach ($order->products as $product)
                                             {{$product->price}}
                                         @endforeach
                                     </td>
                                     <td>
                                      {{ $order->user->name }}
-
+                                    </td>
+                                    <td>
+                                        <a href="javascript:;" data-bs-target="#editstatus{{$order->id}}" data-bs-toggle="modal" class="btn btn-icon btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{trans('common.edit')}}">
+                                            <i class="bi bi-list"></i>
+                                            حالة الطلب
+                                        </a>
                                     </td>
                                 </tr>
                             @empty
@@ -64,6 +67,38 @@
                         </tbody>
                     </table>
                 </div>
+                @foreach($orders as $order)
+                <div class="modal fade text-md-start" id="editstatus{{$order->id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                        <div class="modal-content">
+                            <div class="modal-header bg-transparent">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-5 px-sm-5 pt-50">
+                                <div class="text-center mb-2">
+                                    <h1 class="mb-1">{{trans('common.edit')}}</h1>
+                                </div>
+                                {{Form::open(['url'=>route('admin.orders.statusUpdate',['id'=>$order->id]), 'id'=>'editstatusForm', 'class'=>'row gy-1 pt-75','files'=>'true'])}}
+                                    <div class="col-12 text-center">
+                                        <label class="form-label" for="status">حالة الطلب</label>
+                                        {{ Form::select('status', [
+                                            'pending' => 'Pending',
+                                            'done' => 'Done',
+                                            'review' => 'Review',
+                                        ],$order->status, ['id'=>'status', 'class'=>'form-control  text-center']) }}
+                                    </div>
+                                    <div class="col-12 text-center mt-2 pt-50">
+                                        <button type="submit" class="btn btn-primary me-1">حفظ التغييرات</button>
+                                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                                            إلغاء
+                                        </button>
+                                    </div>
+                                {{Form::close()}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
 
                 {{$orders->links('vendor.pagination.default') }}
 
@@ -122,4 +157,5 @@
             </div>
         </div>
     </div>
+
 @stop
