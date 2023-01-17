@@ -102,7 +102,10 @@ class AccountsController extends Controller
             ];
             return response()->json($resArr);
         }else{
-             return response()->json(['user' => new UserResource($user)]);
+             return response()->json([
+                'user' => new UserResource($user),
+                'qrcode' => asset('uploads/qrcodes/user-'.$user->id.'.svg')
+            ]);
         }
     }
 
