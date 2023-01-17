@@ -20,6 +20,7 @@ class showAccountResource extends JsonResource
             'page_title' => $this->page_title,
             'url' => $this->url,
             'User name' => $this->user()->first()->name . ' ' . $this->user()->first()->familyName,
+            'category_name' => $this->category_name,
             'account' => new specificAccount($this->category($this->category_name, $this->type_id),$this->category_name)
         ];
     }

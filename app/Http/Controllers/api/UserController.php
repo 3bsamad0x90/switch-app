@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\showAccountResource;
+use App\User;
+use App\UserAddress;
+use App\UserFavorites;
+use App\UserPaymentMethods;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\UserPaymentMethods;
-use App\UserFavorites;
-use App\UserAddress;
-use App\User;
-use Auth;
 use Response;
 
 class UserController extends Controller
@@ -45,31 +46,31 @@ class UserController extends Controller
         ];
         return response()->json($resArr);
     }
-    public function myProfile(Request $request)
+    public function myProfile(Request $request, $id)
     {
         $lang = $request->header('lang');
-        $user_id = $request->header('user');
         if ($lang == '') {
             $resArr = [
-                'status' => 'faild',
+                'status' => false,
                 'message' => trans('api.pleaseSendLangCode'),
                 'data' => []
             ];
             return response()->json($resArr);
         }
 
-        $user = User::find($user_id);
+        $user = User::find($id);
         if ($user == '') {
             return response()->json([
-                'status' => 'faild',
+                'status' => false,
                 'message' => trans('api.thisUserDoesNotExist'),
                 'data' => []
             ]);
         }
         $resArr = [
-            'status' => 'success',
+            'status' => true,
             'message' => '',
-            'data' => $user->apiData($lang)
+            'data' => $user->apiData($lang),
+            'accounts' => showAccountResource::collection($user->accounts()->get())
         ];
         return response()->json($resArr);
     }

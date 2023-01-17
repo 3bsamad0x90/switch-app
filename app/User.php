@@ -2,10 +2,11 @@
 
 namespace App;
 
+use App\Accounts;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -114,8 +115,11 @@ class User extends Authenticatable
         return $data;
     }
 
-
-
+    public function accounts()
+    {
+        return $this->hasMany(Accounts::class,'user_id');
+    }
+    
     public function myOrders()
     {
         return $this->hasMany(Orders::class,'user_id');

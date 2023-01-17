@@ -41,7 +41,13 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 });
 
 
+Route::group(['middleware'=> ['api']], function () {
 
+    Route::get('/user/{id}','api\UserController@myProfile');
+    
+    Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
+
+});
 
 
 
