@@ -50,6 +50,7 @@ class SerialNumbersController extends Controller
                 'serial_number.unique' => 'هذا الرقم موجود مسبقا',
             ]);
             $serial_number->serial_number = $request->serial_number;
+            $serial_number->status = $request->status;
             $update = $serial_number->update();
 
         if ($update) {

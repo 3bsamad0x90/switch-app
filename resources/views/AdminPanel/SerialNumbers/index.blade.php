@@ -20,6 +20,7 @@
                         <thead class="text-center">
                             <tr>
                                 <th>الرقم</th>
+                                <th>الحالة</th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
@@ -28,6 +29,13 @@
                             <tr id="row_{{ $SerialNumber->id }}">
                                 <td>
                                     {{$SerialNumber['serial_number']}}
+                                </td>
+                                <td>
+                                    @if($SerialNumber['status'] == 1)
+                                        <span class="badge bg-success">مفعل</span>
+                                    @else
+                                        <span class="badge bg-danger">غير مفعل</span>
+                                    @endif
                                 </td>
                                 <td class="text-center">
                                     <a href="javascript:;" data-bs-target="#editSerialNumber{{$SerialNumber->id}}" data-bs-toggle="modal" class="btn btn-icon btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{trans('common.edit')}}">
@@ -66,7 +74,11 @@
                                             <label class="form-label" for="serial_number">الرقم التسلسلي</label>
                                             {{Form::text('serial_number',$SerialNumber->serial_number,['id'=>'serial_number', 'class'=>'form-control'])}}
                                         </div>
-                                    
+                                        <div class="col-12 col-md-12">
+                                            <label class="form-label" for="status">الحالة</label>
+                                            {{Form::select('status', ['1'=>'مفعل', '0'=>'غير مفعل'], $SerialNumber->status, ['id'=>'status', 'class'=>'form-control'])}}
+                                        </div>
+
                                         <div class="col-12 text-center mt-2 pt-50">
                                             <button type="submit" class="btn btn-primary me-1">{{trans('common.Save changes')}}</button>
                                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
