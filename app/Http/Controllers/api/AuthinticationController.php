@@ -10,7 +10,9 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class AuthinticationController extends Controller
@@ -18,6 +20,7 @@ class AuthinticationController extends Controller
     //
     public function register(Request $request)
     {
+
         $lang = $request->header('lang');
         if ($lang == '') {
             $resArr = [
@@ -56,12 +59,15 @@ class AuthinticationController extends Controller
                 'language' => in_array($lang,['ar','en']) ? $lang : 'ar',
                 'password' => Hash::make($request->password)
             ]);
-
+            if($user){
+                $qrCode = QrCode::format('svg')->size(100)->generate(env('APP_URL').'/'. $user->id, public_path('uploads/qrcodes/user-'.$user->id.'.svg'));
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
-                'user' => new UserResource($user)
+                'user' => new UserResource($user),
+                'qrCode' => asset('uploads/qrcodes/user-'.$user->id.'.svg'),
             ], 200);
 
         } catch (\Throwable $th) {
@@ -115,7 +121,8 @@ class AuthinticationController extends Controller
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
                 // 'user_id' => $user->id,
-                'user' => new UserResource($user)
+                'user' => new UserResource($user),
+                'qrCode' => asset('uploads/qrcodes/user-'.$user->id.'.svg')
             ], Response::HTTP_OK);
 
         } catch (\Throwable $th) {
