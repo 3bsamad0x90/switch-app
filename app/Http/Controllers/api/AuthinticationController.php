@@ -20,7 +20,6 @@ class AuthinticationController extends Controller
     //
     public function register(Request $request)
     {
-
         $lang = $request->header('lang');
         if ($lang == '') {
             $resArr = [
@@ -30,6 +29,7 @@ class AuthinticationController extends Controller
             ];
             return response()->json($resArr);
         }
+        $url = 'https://switch-profile.technomasrsystems.com';
         try {
             //Validated
             $validateUser = Validator::make($request->all(),
@@ -60,7 +60,7 @@ class AuthinticationController extends Controller
                 'password' => Hash::make($request->password)
             ]);
             if($user){
-                $qrCode = QrCode::format('svg')->size(100)->generate(env('APP_URL').'/'. $user->id, public_path('uploads/qrcodes/user-'.$user->id.'.svg'));
+                $qrCode = QrCode::format('svg')->size(100)->generate($url.'/'. $user->id, public_path('uploads/qrcodes/user-'.$user->id.'.svg'));
             }
             return response()->json([
                 'status' => true,
