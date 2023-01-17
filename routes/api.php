@@ -48,7 +48,7 @@ Route::group(['middleware'=> ['api']], function () {
 
     Route::get('/user/{id}','api\UserController@myProfile');
 
-    Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
+    Route::post('/sendmessage','api\ContactMessagesController@sendContactMessage');
 
 });
 

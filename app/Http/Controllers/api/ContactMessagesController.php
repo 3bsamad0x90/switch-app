@@ -13,18 +13,16 @@ class ContactMessagesController extends Controller
     public function sendContactMessage(Request $request)
     {
         $lang = $request->header('lang');
-        if ($lang == '') {
-            $resArr = [
-                'status' => 'faild',
-                'message' => trans('api.pleaseSendLangCode'),
-                'data' => []
-            ];
-            return response()->json($resArr);
+        $user_id = $request->header('user');
+
+        if (checkUserForApi($lang, $user_id) !== true) {
+            return checkUserForApi($lang, $user_id);
         }
 
         $rules = [
                     'name' => 'required|string',
                     'email' => 'required|email',
+                    'title' => 'required',
                     'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
                     'content' => 'required|string'
                 ];
@@ -33,7 +31,7 @@ class ContactMessagesController extends Controller
         {
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
-                    'status' => 'failed',
+                    'status' => false,
                     'message' => trans('api.pleaseRecheckYourDetails'),
                     'data' => $error
                 ]);
@@ -41,17 +39,17 @@ class ContactMessagesController extends Controller
         }
 
         $data = $request->except(['_token']);
-
+        $data['user_id'] = $user_id;
         $message = ContactMessages::create($data);
         if ($message) {
             $resArr = [
-                'status' => 'success',
+                'status' => true,
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
                 'data' => []
             ];
         } else {
             $resArr = [
-                'status' => 'failed',
+                'status' => false,
                 'message' => trans('api.someThingWentWrong'),
                 'data' => []
             ];
