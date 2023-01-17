@@ -25,4 +25,6 @@ return [
     'page_title' => 'عنوان الصفحة',
     'url' => 'الرابط',
     'type' => 'النوع',
+    'ThisSerialNumberIsNotValid' => 'هذا الرقم التسلسلي غير صالح',
+    'ThisSerialNumberHasBeenUsed' => 'هذا الرقم التسلسلي تم استخدامه من قبل',
 ];

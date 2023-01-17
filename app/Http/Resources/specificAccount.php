@@ -15,10 +15,9 @@ class specificAccount extends JsonResource
     public function toArray($request)
     {
         $lang = $request->header('lang');
-        $category_name = $request->header('category_name');
         return [
             'name' => $this['appName_'.$lang],
-            'icon' => asset('uploads/apps/'.$category_name.'/'.$this->icon)
+            'icon' => $this->icon,
         ];
     }
 }

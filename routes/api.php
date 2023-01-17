@@ -38,13 +38,16 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/editAccount/{user}', 'api\AccountsController@editAccount');
     Route::post('/updateAccount', 'api\AccountsController@updateAccount');
     Route::post('/logout', 'api\AuthinticationController@logout');
+
+    //serial number
+    Route::post('/serialNumber', 'api\SerialNumberController@serialNumber');
 });
 
 
 Route::group(['middleware'=> ['api']], function () {
 
     Route::get('/user/{id}','api\UserController@myProfile');
-    
+
     Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
 
 });

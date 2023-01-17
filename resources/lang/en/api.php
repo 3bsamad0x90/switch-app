@@ -22,4 +22,6 @@ return [
     'activateMyAccount' => 'Activate My Account',
     'Regards' => 'Regards',
     'yourDataHasBeenSentFailed' => 'your Data Has Been Sent Failed',
+    'ThisSerialNumberIsNotValid' => 'This serial number is not valid',
+    'ThisSerialNumberHasBeenUsed' => 'This serial number has been used'
 ];
