@@ -10,6 +10,7 @@ use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AccountsController extends Controller
 {
@@ -44,9 +45,12 @@ class AccountsController extends Controller
         $data = $request->except(['_token']);
         $account = Accounts::create($data);
         if($account){
+            $qrCode = QrCode::format('svg')->size(100)->generate('Account: '. $account->url, public_path('uploads/qrcodes/account-'.$account->id.'.svg'));
+
             $resArr = [
                 'status' => 'success',
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
+                'qrCode' =>  public_path('uploads/qrcodes/account-'.$account->id.'.svg'),
                 'data' => []
             ];
         }else{
