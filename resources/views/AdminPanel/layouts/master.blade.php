@@ -9,6 +9,7 @@
     <meta name="description" content=".">
     <meta name="keywords" content=".">
     <meta name="author" content="TechnoMasr Co.">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{isset($title) ? $title : 'Switch'}}</title>
     <link rel="apple-touch-icon" href="{{asset('AdminAssets/app-assets/images/ico/apple-icon-120.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{asset(getSettingImageLink('logo'))}}">
@@ -47,6 +48,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('AdminAssets/app-assets/'.getCssFolder().'/custom-rtl.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('AdminAssets/assets/css/style-rtl.css')}}">
     <!-- END: Custom CSS-->
+
     @yield('new_style')
 </head>
 <!-- END: Head-->

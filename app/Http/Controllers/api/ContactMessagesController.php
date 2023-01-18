@@ -69,7 +69,7 @@ class ContactMessagesController extends Controller
             return checkUserForApi($lang, $user_id);
         }
 
-        $messages = ContactMessages::where('user_id',$user_id)->where('status', 1)->get();
+        $messages = ContactMessages::where('user_id',$user_id)->where('status', 0)->get();
         if ($messages) {
             $resArr = [
                 'status' => true,
