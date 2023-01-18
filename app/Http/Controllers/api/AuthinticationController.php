@@ -39,7 +39,8 @@ class AuthinticationController extends Controller
                 'job_title' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
-                'password' => 'required'
+                'password' => 'required',
+                'device_token' => 'nullable'
             ]);
 
             if($validateUser->fails()){
@@ -55,6 +56,7 @@ class AuthinticationController extends Controller
                 'familyName' => $request->familyName,
                 'job_title' => $request->job_title,
                 'email' => $request->email,
+                'device_token' => $request->device_token,
                 'phone' => $request->phone,
                 'language' => in_array($lang,['ar','en']) ? $lang : 'ar',
                 'password' => Hash::make($request->password)
@@ -115,7 +117,10 @@ class AuthinticationController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-
+            $url = 'https://switch-profile.technomasrsystems.com';
+            if(!file_exists(asset('uploads/qrcodes/user-'.$user->id.'.svg'))){
+                $qrCode = QrCode::format('svg')->size(100)->generate($url.'/'. $user->id, public_path('uploads/qrcodes/user-'.$user->id.'.svg'));
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',

@@ -50,7 +50,8 @@ Route::group(['middleware'=> ['api']], function () {
 
     Route::post('/sendmessage','api\ContactMessagesController@sendContactMessage');
 
-});
+    Route::get('/exchange','api\ContactMessagesController@exchange');
 
+});
 
 

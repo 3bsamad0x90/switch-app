@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use App\Accounts;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -119,7 +120,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Accounts::class,'user_id');
     }
-    
+
     public function myOrders()
     {
         return $this->hasMany(Orders::class,'user_id');
@@ -130,4 +131,9 @@ class User extends Authenticatable
         return $this->myOrders()->where('status','draft')->where('main_order_id',0)->first();
     }
 
+    public function routeNotificationForFcm()
+    {
+        // return $this->device_token;
+        return $this->from('users')->pluck('device_token')->toArray();
+    }
 }

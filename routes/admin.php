@@ -94,6 +94,57 @@ Route::group(['prefix'=>'AdminPanel','middleware'=>['isAdmin','auth']], function
         Route::get('/{id}/delete','admin\ordersController@delete')->name('admin.orders.delete');
     });
 
+// Route::get('/firebase', function () {
+//     $SERVER_API_KEY = 'AAAAMNkmgKM:APA91bGelrnWDzVXh2vi5CaKVN_8mXB8PDvisKl7S885kPrXAVZ8koGJ0JiUEIC-kYEH_Sm7-1m4xzH3oT8k9HNmFM30B51ZJn--mQla63cm6nRwLCPlmbrHadqgcNt8fN3T1yVHWakN';
 
+//             // $token_1 = $user->device_token;
+//             $token_1 = '';
+
+//             $data = [
+
+//                 "registration_ids" => [
+//                     $token_1
+//                 ],
+
+//                 "notification" => [
+
+//                     "title" => "Hello",
+
+//                     "body" => "content",
+
+//                     "sound"=> "default" // required for sound on ios
+
+//                 ],
+
+//             ];
+
+//             $dataString = json_encode($data);
+
+//             $headers = [
+
+//                 'Authorization: key=' . $SERVER_API_KEY,
+
+//                 'Content-Type: application/json',
+
+//             ];
+
+//             $ch = curl_init();
+
+//             curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+
+//             curl_setopt($ch, CURLOPT_POST, true);
+
+//             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+//             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+//             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+//             curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+//             $response = curl_exec($ch);
+//             dd($response);
+
+// });
 
 });
