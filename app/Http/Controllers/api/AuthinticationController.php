@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-
 class AuthinticationController extends Controller
 {
     //
@@ -117,6 +116,10 @@ class AuthinticationController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
+            $user->update([
+                'device_token' => $request->device_token,
+                'language' => in_array($lang,['ar','en']) ? $lang : 'ar',
+            ]);
             $url = 'https://switch-profile.technomasrsystems.com';
             if(!file_exists(asset('uploads/qrcodes/user-'.$user->id.'.svg'))){
                 $qrCode = QrCode::format('svg')->size(100)->generate($url.'/'. $user->id, public_path('uploads/qrcodes/user-'.$user->id.'.svg'));
@@ -147,4 +150,34 @@ class AuthinticationController extends Controller
         ], Response::HTTP_OK);
     }
 
+    //change password
+    public function changePassword(Request $request){
+        $lang = $request->header('lang');
+        if ($lang == '') {
+            $resArr = [
+                'status' => 'faild',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        $request->validate([
+            'password' => ['required'],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+        if (!Hash::check($request->password, auth()->user()->password)) {
+            return response()->json([
+                'status' => false,
+                'message' => trans('api.PasswordDoesNotMatchYourCurrentPassword')
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        // return $request->all();
+
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        return response()->json([
+            'status' => true,
+            'message' => trans('api.PasswordChangedSuccessfully')
+        ], Response::HTTP_OK);
+    }
 }

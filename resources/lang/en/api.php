@@ -10,6 +10,10 @@ return [
     'yourAccountIsNotActive' => 'your Account Is Not Active',
     'thisUserDoesNotExist' => 'this User Does Not Exist',
     'yourDataHasBeenSentSuccessfully' => 'your Data Has Been Sent Successfully',
+    'exchangeTrue' => 'connection accepted',
+    'exchangeFalse' => 'connection rejected',
+    'favoriteTrue' => 'Added to favorites successfully',
+    'favoriteFalse' => 'removed from favorites successfully',
     'yourOrderHasBeenSentSuccessfully' => 'your Order Has Been Sent Successfully',
     'noPaymentMethodWithThisID' => 'no Payment Method With This ID',
     'pleaseRecheckYourPassword' => 'Please Recheck Your Password',
@@ -23,5 +27,7 @@ return [
     'Regards' => 'Regards',
     'yourDataHasBeenSentFailed' => 'your Data Has Been Sent Failed',
     'ThisSerialNumberIsNotValid' => 'This serial number is not valid',
-    'ThisSerialNumberHasBeenUsed' => 'This serial number has been used'
+    'ThisSerialNumberHasBeenUsed' => 'This serial number has been used',
+    'PasswordDoesNotMatchYourCurrentPassword' => 'The provided password does not match your current password.',
+    'PasswordChangedSuccessfully' => 'Password Changed Successfully',
 ];

@@ -11,6 +11,10 @@ return [
     'yourAccountIsNotActive' => 'لقد تم تسجيل حسابك بنجاح ولكن يجب أن تقوم بتفعيل حسابك عبر رسالة التفعيل التي تم إرسالها إلى بريدك الإلكتروني',
     'thisUserDoesNotExist' => 'عفواً لا يوجد أي بيانات لهذا الحساب',
     'yourDataHasBeenSentSuccessfully' => 'تم إرسال البيانات بنجاح',
+    'exchangeTrue' => 'تم الموافقة على الطلب',
+    'exchangeFalse' => 'تم رفض الطلب',
+    'favoriteTrue' => 'تم الإضافة إلى المفضلة بنجاح',
+    'favoriteFalse' => 'تم الحذف من المفضلة ',
     'yourOrderHasBeenSentSuccessfully' => 'تم إرسال بيانات الطلب الخاص بك بنجاح',
     'noPaymentMethodWithThisID' => 'يوجد خطأ في الاستعلام عن طريقة الدفع التي قمت بإختيارها',
     'pleaseRecheckYourPassword' => 'برجاء التحقق من كتابة كلمة المرور بشكل صحيح',
@@ -27,4 +31,6 @@ return [
     'type' => 'النوع',
     'ThisSerialNumberIsNotValid' => 'هذا الرقم التسلسلي غير صالح',
     'ThisSerialNumberHasBeenUsed' => 'هذا الرقم التسلسلي تم استخدامه من قبل',
+    'PasswordDoesNotMatchYourCurrentPassword' => 'كلمة المرور القديمة التي قمت بإدخالها غير صحيحة',
+    'PasswordChangedSuccessfully' => 'تم تغيير كلمة المرور بنجاح',
 ];

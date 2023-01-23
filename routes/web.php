@@ -25,11 +25,11 @@ Route::post('/testStripe', function () {
             "amount" => 100 * 150,
             "currency" => "inr",
             "source" => request()->stripeToken,
-            "description" => "Making test payment." 
+            "description" => "Making test payment."
     ]);
 
     Session::flash('success', 'Payment has been successfully processed.');
-        
+
     return back();
 })->name('stripe.payment');
 Route::get('SwitchLang/{lang}',function($lang){
@@ -55,7 +55,7 @@ Route::get('user/{email}/{lang}',function($email,$lang){
         $html .= '</div>';
         return $html;
     }
-    
+
 })->name('user.ativate.account');
 
 

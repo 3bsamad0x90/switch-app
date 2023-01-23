@@ -43,10 +43,51 @@ class ContactMessagesController extends Controller
         $data = $request->except(['_token']);
         $data['user_id'] = $user_id;
         $user = User::find($user_id);
+        $device_token = $user->device_token;
 
         $message = ContactMessages::create($data);
         if ($message) {
-            $user->notify(new UsersNotifications($message));
+            // $user->notify(new UsersNotifications($message));
+            $url = 'https://fcm.googleapis.com/fcm/send';
+
+            $FcmToken = $device_token;
+
+            $serverKey = 'AAAAMNkmgKM:APA91bGelrnWDzVXh2vi5CaKVN_8mXB8PDvisKl7S885kPrXAVZ8koGJ0JiUEIC-kYEH_Sm7-1m4xzH3oT8k9HNmFM30B51ZJn--mQla63cm6nRwLCPlmbrHadqgcNt8fN3T1yVHWakN'; // ADD SERVER KEY HERE PROVIDED BY FCM
+
+            $data = [
+                "registration_ids" => $FcmToken,
+                "notification" => [
+                    "title" => $request->title,
+                    "body" => $request->content,
+                ]
+            ];
+            $encodedData = json_encode($data);
+
+            $headers = [
+                'Authorization:key=' . $serverKey,
+                'Content-Type: application/json',
+            ];
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+            // Disabling SSL Certificate support temporarly
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+            // Execute post
+            $result = curl_exec($ch);
+            if ($result === FALSE) {
+                die('Curl failed: ' . curl_error($ch));
+            }
+            // Close connection
+            curl_close($ch);
+
+
             $resArr = [
                 'status' => true,
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
@@ -80,6 +121,112 @@ class ContactMessagesController extends Controller
             $resArr = [
                 'status' => false,
                 'message' => trans('api.someThingWentWrong'),
+                'data' => []
+            ];
+        }
+        return response()->json($resArr);
+    }
+    public function exchangeStatus(Request $request, $id){
+        $lang = $request->header('lang');
+        $user_id = $request->header('user');
+        if (checkUserForApi($lang, $user_id) !== true) {
+            return checkUserForApi($lang, $user_id);
+        }
+        $message = ContactMessages::find($id);
+        $message->status = $request->status;
+        $message->save();
+        if ($message->status == 1){
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.exchangeTrue'),
+                'data' => []
+            ];
+        }elseif($message->status == 0){
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.exchangeFalse'),
+                'data' => []
+            ];
+        }else{
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.someThingWentWrong'),
+                'data' => []
+            ];
+
+        }
+
+        return response()->json($resArr);
+    }
+    public function userconnection(Request $request){
+        $lang = $request->header('lang');
+        $user_id = $request->header('user');
+        if (checkUserForApi($lang, $user_id) !== true) {
+            return checkUserForApi($lang, $user_id);
+        }
+        $messages = ContactMessages::where('status', 1)->where('user_id',$user_id)->get();
+        if ($messages) {
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.yourDataHasBeenSentSuccessfully'),
+                'data' => $messages
+            ];
+        } else {
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.someThingWentWrong'),
+                'data' => []
+            ];
+        }
+        return response()->json($resArr);
+    }
+
+    public function favorite(Request $request, $id){
+        $lang = $request->header('lang');
+        $user_id = $request->header('user');
+        if (checkUserForApi($lang, $user_id) !== true) {
+            return checkUserForApi($lang, $user_id);
+        }
+        $message = ContactMessages::find($id);
+        $message->fav = $request->fav;
+        $message->save();
+        if ($message->fav == 1){
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.favoriteTrue'),
+                'data' => []
+            ];
+        }elseif($message->fav == 0){
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.favoriteFalse'),
+                'data' => []
+            ];
+        }else{
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.someThingWentWrong'),
+                'data' => []
+            ];
+
+        }
+        return response()->json($resArr);
+    }
+    public function favoriteShow(Request $request){
+        $lang = $request->header('lang');
+        $user_id = $request->header('user');
+        if (checkUserForApi($lang, $user_id) !== true) {
+            return checkUserForApi($lang, $user_id);
+        }
+        $messages = ContactMessages::where('fav', 1)->where('user_id',$user_id)->get();
+        if ($messages) {
+            $resArr = [
+                'status' => true,
+                'data' => $messages
+            ];
+        } else {
+            $resArr = [
+                'status' => false,
                 'data' => []
             ];
         }
