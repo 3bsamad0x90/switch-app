@@ -151,7 +151,8 @@ class AuthinticationController extends Controller
     }
 
     //change password
-    public function changePassword(Request $request){
+    public function changePassword(Request $request)
+    {
         $lang = $request->header('lang');
         if ($lang == '') {
             $resArr = [
@@ -179,5 +180,33 @@ class AuthinticationController extends Controller
             'status' => true,
             'message' => trans('api.PasswordChangedSuccessfully')
         ], Response::HTTP_OK);
+    }
+    //delete account
+    public function deleteAccount(Request $request){
+        $lang = $request->header('lang');
+        if ($lang == '') {
+            $resArr = [
+                'status' => 'faild',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        $user = User::find(auth()->user()->id);
+        if($user->role != "1"){
+            $user->delete();
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.AccountDeletedSuccessfully'),
+            ];
+            return response()->json($resArr);
+        }else{
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.YouCanNotDeleteThisAccount')
+            ];
+            return response()->json($resArr);
+        }
+
     }
 }

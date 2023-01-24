@@ -30,4 +30,6 @@ return [
     'ThisSerialNumberHasBeenUsed' => 'This serial number has been used',
     'PasswordDoesNotMatchYourCurrentPassword' => 'The provided password does not match your current password.',
     'PasswordChangedSuccessfully' => 'Password Changed Successfully',
+    'AccountDeletedSuccessfully' => 'Account Deleted Successfully',
+    'YouCanNotDeleteThisAccount' => 'You Can\'t Delete This Account',
 ];

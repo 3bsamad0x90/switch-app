@@ -33,4 +33,6 @@ return [
     'ThisSerialNumberHasBeenUsed' => 'هذا الرقم التسلسلي تم استخدامه من قبل',
     'PasswordDoesNotMatchYourCurrentPassword' => 'كلمة المرور القديمة التي قمت بإدخالها غير صحيحة',
     'PasswordChangedSuccessfully' => 'تم تغيير كلمة المرور بنجاح',
+    'YouCanNotDeleteThisAccount' => 'لا يمكنك حذف هذا الحساب',
+    'AccountDeletedSuccessfully' => 'تم حذف الحساب بنجاح',
 ];
