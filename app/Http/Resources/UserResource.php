@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'bio' => $this->bio,
             'language' => $this->language,
             'image' => $this->photoLink(),
-            'background_image' => $this->background_image,
+            'background_image' => $this->backgroundPhotoLink(),
         ];
     }
 }

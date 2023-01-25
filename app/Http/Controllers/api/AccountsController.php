@@ -70,17 +70,17 @@ class AccountsController extends Controller
             ];
             return response()->json($resArr);
         }
-
-        $accounts = Accounts::all();
-        if(!$accounts){
+        $user = User::find(auth()->user()->id);
+        $accounts = Accounts::where('user_id', $user->id)->get();
+        if($accounts == '[]'){
             $resArr = [
-                'status' => 'failed',
-                'message' => trans('api.yourDataHasBeenSentFailed'),
+                'status' => false,
+                'message' => trans('api.youDontHaveAnyAccount'),
                 'data' => []
             ];
             return response()->json($resArr);
         }else{
-            return response()->json(showAccountResource::collection($accounts));
+            return response()->json(['accounts'=>showAccountResource::collection($accounts)]);
         }
     }
     public function editAccount(Request $request, User $user ){
@@ -111,19 +111,19 @@ class AccountsController extends Controller
 
     public function updateAccount(Request $request){
         $lang = $request->header('lang');
-        $user_id = $request->header('user_id');
-        if (checkUserForApi($lang, $user_id) !== true) {
-            return checkUserForApi($lang, $user_id);
+        $user = User::find(auth()->user()->id);
+        if (checkUserForApi($lang, $user->id) !== true) {
+            return checkUserForApi($lang, $user->id);
         }
         $rules = [
             'name' => 'nullable',
             'familyName' => 'nullable',
-            'email' => 'nullable|email|unique:users,email,'.$user_id,
-            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|unique:users,phone,'.$user_id,
+            'email' => 'nullable|email|unique:users,email,'.$user->id,
+            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|unique:users,phone,'.$user->id,
             'job_title' => 'nullable|string|max:255',
             'password' => 'nullable',
             'bio' => 'nullable|string|max:255',
-            'image' => 'nullable|image',
+            'image' => 'nullable|mimes:jpeg,jpg,png',
             'background_image' => 'nullable|image'
         ];
         $validator=Validator::make($request->all(),$rules);
@@ -141,7 +141,7 @@ class AccountsController extends Controller
         if ($request['password'] != '') {
             $data['password'] = bcrypt($request['password']);
         }
-        $user = User::find($user_id);
+        $user = User::find($user->id);
         if ($request->image != '') {
             if ($user->image != '') {
                 delete_image('users/'.$user->id , $user->image);

@@ -35,5 +35,6 @@ return [
     'PasswordChangedSuccessfully' => 'تم تغيير كلمة المرور بنجاح',
     'YouCanNotDeleteThisAccount' => 'لا يمكنك حذف هذا الحساب',
     'AccountDeletedSuccessfully' => 'تم حذف الحساب بنجاح',
-    'YouHaveAnOrdersYouCanNotDeleteYourAccount'=> 'لديك طلبات قيد التنفيذ , لا يمكنك حذف حسابك'
+    'YouHaveAnOrdersYouCanNotDeleteYourAccount'=> 'لديك طلبات قيد التنفيذ , لا يمكنك حذف حسابك',
+    'youDontHaveAnyAccount' => 'لا يوجد لديك أي حساب',
 ];

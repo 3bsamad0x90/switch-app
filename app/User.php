@@ -56,13 +56,12 @@ class User extends Authenticatable
     }
     public function backgroundPhotoLink()
     {
-        // $image = asset('AdminAssets/app-assets/images/portrait/small/avatar.png');
+        $image = asset('AdminAssets/app-assets/images/portrait/small/background.png');
 
         if ($this->background_image != '') {
             $image = asset('uploads/users/'.$this->id.'/'.$this->background_image);
-            return $image;
         }
-
+        return $image;
     }
     public function countryData()
     {

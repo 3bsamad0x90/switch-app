@@ -32,5 +32,6 @@ return [
     'PasswordChangedSuccessfully' => 'Password Changed Successfully',
     'AccountDeletedSuccessfully' => 'Account Deleted Successfully',
     'YouCanNotDeleteThisAccount' => 'You Can\'t Delete This Account',
-    'YouHaveAnOrdersYouCanNotDeleteYourAccount' => 'You Have An Orders You Can Not Delete Your Account'
+    'YouHaveAnOrdersYouCanNotDeleteYourAccount' => 'You Have An Orders You Can Not Delete Your Account',
+    'youDontHaveAnyAccount' => 'you Don\'t Have Any Account',
 ];
