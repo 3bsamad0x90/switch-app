@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\users\CreateUser;
 use App\Http\Resources\UserResource;
+use App\Orders;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -193,20 +194,30 @@ class AuthinticationController extends Controller
             return response()->json($resArr);
         }
         $user = User::find(auth()->user()->id);
-        if($user->role != "1"){
-            $user->delete();
+
+        $checkOrder = Orders::where('user_id', $user->id)->whereIn('status',['review','pending'])->exists();
+        // return response()->json($checkOrder);
+        if($checkOrder === true){
             $resArr = [
-                'status' => true,
-                'message' => trans('api.AccountDeletedSuccessfully'),
+                'status' => false,
+                'message' => trans('api.YouHaveAnOrdersYouCanNotDeleteYourAccount')
             ];
             return response()->json($resArr);
         }else{
-            $resArr = [
-                'status' => false,
-                'message' => trans('api.YouCanNotDeleteThisAccount')
-            ];
-            return response()->json($resArr);
+            if($user->role != "1"){
+                $user->delete();
+                $resArr = [
+                    'status' => true,
+                    'message' => trans('api.AccountDeletedSuccessfully'),
+                ];
+                return response()->json($resArr);
+            }else{
+                $resArr = [
+                    'status' => false,
+                    'message' => trans('api.YouCanNotDeleteThisAccount')
+                ];
+                return response()->json($resArr);
+            }
         }
-
     }
 }

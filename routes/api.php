@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/editAccount/{user}', 'api\AccountsController@editAccount');
     Route::post('/updateAccount', 'api\AccountsController@updateAccount');
     Route::post('/logout', 'api\AuthinticationController@logout');
-    route::post('/deleteAccount', 'api\AuthinticationController@deleteAccount');
+    Route::post('/deleteAccount', 'api\AuthinticationController@deleteAccount');
     //change password
     Route::post('/changePassword', 'api\AuthinticationController@changePassword');
     //serial number
