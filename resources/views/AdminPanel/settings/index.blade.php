@@ -11,7 +11,12 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" aria-controls="home" role="tab" aria-selected="true">
-                                <i data-feather="home"></i> {{trans('common.generalSettings')}}
+                                <i data-feather="home"></i> الإعدادات العامة
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="mainPage-tab" data-bs-toggle="tab" href="#mainPage" aria-controls="home" role="tab" aria-selected="true">
+                                <i data-feather="book-open"></i> الصفحة الرئيسية
                             </a>
                         </li>
                         <li class="nav-item">
@@ -35,6 +40,9 @@
                         <div class="tab-pane active" id="general" aria-labelledby="general-tab" role="tabpanel">
                             @include('AdminPanel.settings.includes.general')
                         </div>
+                        <div class="tab-pane" id="mainPage" aria-labelledby="mainPage-tab" role="tabpanel">
+                            @include('AdminPanel.settings.includes.mainPage')
+                        </div>
                         <div class="tab-pane" id="social" aria-labelledby="social-tab" role="tabpanel">
                             @include('AdminPanel.settings.includes.social')
                         </div>
@@ -44,7 +52,7 @@
                         <div class="tab-pane" id="images" aria-labelledby="images-tab" role="tabpanel">
                             @include('AdminPanel.settings.includes.images')
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="card-footer">

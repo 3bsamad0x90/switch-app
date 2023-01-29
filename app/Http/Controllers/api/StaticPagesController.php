@@ -78,5 +78,34 @@ class StaticPagesController extends Controller
         return response()->json($resArr);
     }
 
+    public function landingPage(Request $request){
+        $lang = $request->header('lang');
+        if ($lang == '') {
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.pleaseSendLangCode'),
+            ];
+            return response()->json($resArr);
+        }
+        $list = [
+            'mainPage' => [
+                'title' => getSettingValue('mainPageTitle_'.$lang),
+                'description' => getSettingValue('mainPageDesc_'.$lang),
+                'image' => getSettingImageLink('mainPageImage'),
+            ],
+            'why' => [
+                'title' => getSettingValue('facebook'),
+                'dscription' => getSettingValue('twitter'),
+                'Boxes' => getSettingValue('linkedin'),
+
+            ]
+        ];
+        $resArr = [
+            'status' => 'success',
+            'message' => '',
+            'data' => $list
+        ];
+        return response()->json($resArr);
+    }
 
 }

@@ -47,7 +47,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/serialNumber', 'api\SerialNumberController@serialNumber');
 });
 
-
 Route::group(['middleware'=> ['api']], function () {
 
     Route::get('/user/{id}','api\UserController@myProfile');
@@ -63,6 +62,8 @@ Route::group(['middleware'=> ['api']], function () {
     //socail media
     Route::get('/media', 'api\StaticPagesController@media');
     Route::get('/faqs', 'api\StaticPagesController@faqs');
+    //static pages for web landing page
+    Route::get('/landingPage', 'api\StaticPagesController@landingPage');
 });
 
 
