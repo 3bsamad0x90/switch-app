@@ -232,4 +232,28 @@ class ContactMessagesController extends Controller
         }
         return response()->json($resArr);
     }
+    public function DeleteUserConnection(Request $request, ContactMessages $contact){
+        $lang = $request->header('lang');
+        if($lang == ''){
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        if($contact){
+            $contact->delete();
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.AccountDeletedSuccessfully')
+            ];
+        }else{
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.someThingWentWrong')
+            ];
+        }
+        return response()->json($resArr);
+    }
 }

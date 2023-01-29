@@ -37,4 +37,5 @@ return [
     'AccountDeletedSuccessfully' => 'تم حذف الحساب بنجاح',
     'YouHaveAnOrdersYouCanNotDeleteYourAccount'=> 'لديك طلبات قيد التنفيذ , لا يمكنك حذف حسابك',
     'youDontHaveAnyAccount' => 'لا يوجد لديك أي حساب',
+    'YouDoNotHaveAPermissionToThisAccount' => 'لا يوجد ليك الصلاحيه لحذف هذا الحساب'
 ];

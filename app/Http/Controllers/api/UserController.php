@@ -70,7 +70,8 @@ class UserController extends Controller
             'status' => true,
             'message' => '',
             'data' => $user->apiData($lang),
-            'accounts' => showAccountResource::collection($user->accounts()->get())
+            'accounts' => showAccountResource::collection($user->accounts()->where('status', 1)->get()),
+            'qrcode' => asset('uploads/qrcodes/user-'.$user->id.'.svg')
         ];
         return response()->json($resArr);
     }

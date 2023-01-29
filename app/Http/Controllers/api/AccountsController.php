@@ -59,6 +59,56 @@ class AccountsController extends Controller
         }
         return response()->json($resArr);
     }
+    //update Account
+    public function updateAcc(Request $request, Accounts $account){
+        $lang = $request->header('lang');
+        $user = auth()->user();
+        if($lang == ''){
+            $resArr = [
+                'status' => 'failed',
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        if ($account->user_id != $user->id) {
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.YouDoNotHaveAPermissionToThisAccount'),
+            ];
+            return response()->json($resArr);
+        }
+        $rules = [
+            'page_title' => 'required|string',
+            'url' => 'required|url|unique:accounts,url,'.$account->id,
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails())
+        {
+            foreach ((array)$validator->errors() as $error) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => trans('api.pleaseRecheckYourDetails'),
+                    'data' => $error
+                ]);
+            }
+        }
+        $data = $request->except('_token');
+        if($account){
+            $account->update($data);
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.yourDataHasBeenSentSuccessfully'),
+                'data' => $account
+            ];
+        }else{
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.yourDataHasBeenSentFailed'),
+            ];
+        }
+        return response()->json($resArr);
+    }
 
     public function showAccount(Request $request){
         $lang = $request->header('lang');
@@ -83,6 +133,41 @@ class AccountsController extends Controller
             return response()->json(['accounts'=>showAccountResource::collection($accounts)]);
         }
     }
+    //Change Status
+    public function changeStatus(Request $request, Accounts $account){
+        $lang = $request->header('lang');
+        $user = auth()->user();
+        if($lang == ''){
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        if ($account->user_id != $user->id) {
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.YouDoNotHaveAPermissionToThisAccount'),
+            ];
+            return response()->json($resArr);
+        }
+        $account->status = $request->status;
+        if($account->update()){
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.yourDataHasBeenSentSuccessfully'),
+                'data' => $account
+            ];
+        }else{
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.yourDataHasBeenSentFailed'),
+            ];
+        }
+        return response()->json($resArr);
+    }
+
     public function editAccount(Request $request, User $user ){
         $lang = $request->header('lang');
         if($lang == ''){

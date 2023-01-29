@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'dir' => 'ltr',
-    'cssFile' => 'css',
+    'dir' => 'rtl',
+    'cssFile' => 'css-rtl',
     'thisLang' => 'en',
     'otherLang' => 'ar',
     'langFlag' => 'us',
@@ -23,7 +23,7 @@ return [
     'privacy policy & terms' => 'privacy policy & terms',
     'madeBy' => 'Made By',
     'TechnoMasrCo.' => 'Technomasr Co.',
-    
+
 
     'PanelHome' => 'Home',
     'Logout' => 'Logout',
@@ -256,13 +256,13 @@ return [
     'publisherspayments' => 'Publishers Payments',
     'youHaveToAssignOnePermissionAtLeast' => 'You Have To Assign One Permission At Least',
     'Allows a full access to the system' => 'Allows a full access to the system',
-    
+
     'attachment' => 'attachment',
     'weight' => 'Weight',
     'booksNo' => 'Books No.',
     'KiloGram' => 'Kg',
     'Dimensions' => 'Dimensions',
-    
+
     'passwordConfirmation' => 'Password Confirmation',
     'responsible' => 'In-Charge',
     'website' => 'website',

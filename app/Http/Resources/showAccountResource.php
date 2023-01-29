@@ -21,6 +21,7 @@ class showAccountResource extends JsonResource
             'url' => $this->url,
             'User name' => $this->user()->first()->name . ' ' . $this->user()->first()->familyName,
             'category_name' => $this->category_name,
+            'status' => $this->status,
             'account' => new specificAccount($this->category($this->category_name, $this->type_id),$this->category_name)
         ];
     }

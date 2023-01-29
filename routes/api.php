@@ -31,7 +31,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/creative', 'api\AppsController@creative');
     Route::get('/business', 'api\AppsController@business');
     Route::post('/addAccount', 'api\AccountsController@addAccount');
+    Route::post('/updateAcc/{account}', 'api\AccountsController@updateAcc');
     Route::get('/show', 'api\AccountsController@showAccount');
+    Route::post('/changeStatus/{account}', 'api\AccountsController@changeStatus');
     Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
 
     //edit account
@@ -55,8 +57,12 @@ Route::group(['middleware'=> ['api']], function () {
     Route::get('/exchange','api\ContactMessagesController@exchange');
     Route::post('/exchangeStatus/{id}','api\ContactMessagesController@exchangeStatus');
     Route::get('/userconnection','api\ContactMessagesController@userconnection');
+    Route::post('/DeleteUserConnection/{contact}','api\ContactMessagesController@DeleteUserConnection');
     Route::post('/favorite/{id}','api\ContactMessagesController@favorite');
     Route::get('/favoriteShow','api\ContactMessagesController@favoriteShow');
+    //socail media
+    Route::get('/media', 'api\StaticPagesController@media');
+    Route::get('/faqs', 'api\StaticPagesController@faqs');
 });
 
 

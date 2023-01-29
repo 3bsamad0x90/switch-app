@@ -34,4 +34,5 @@ return [
     'YouCanNotDeleteThisAccount' => 'You Can\'t Delete This Account',
     'YouHaveAnOrdersYouCanNotDeleteYourAccount' => 'You Have An Orders You Can Not Delete Your Account',
     'youDontHaveAnyAccount' => 'you Don\'t Have Any Account',
+    'YouDoNotHaveAPermissionToThisAccount' => 'You Do Not Have A Permission To This Account',
 ];
