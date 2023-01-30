@@ -26,7 +26,7 @@ class AccountsController extends Controller
         }
         $rules = [
             'page_title' => 'required|string',
-            'url' => 'required|url|unique:accounts,url',
+            'url' => 'required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url',
             'type_id' => 'required',
             'user_id' => 'required|exists:users,id',
             'category_name' => 'required',
@@ -80,7 +80,7 @@ class AccountsController extends Controller
         }
         $rules = [
             'page_title' => 'required|string',
-            'url' => 'required|url|unique:accounts,url,'.$account->id,
+            'url' => 'required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url,'.$account->id,
         ];
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails())
