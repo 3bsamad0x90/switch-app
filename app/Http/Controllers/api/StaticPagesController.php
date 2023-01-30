@@ -94,15 +94,36 @@ class StaticPagesController extends Controller
                 'image' => getSettingImageLink('mainPageImage'),
             ],
             'why' => [
-                'title' => getSettingValue('facebook'),
-                'dscription' => getSettingValue('twitter'),
-                'Boxes' => getSettingValue('linkedin'),
+                'title' => getSettingValue('whyTitle_'.$lang),
+                'dscription' => getSettingValue('whyDesc_'.$lang),
 
+                'Boxes' => [
+                    'box1' => [
+                        'icon1' => getSettingValue('why1icon'),
+                        'title1' => getSettingValue('why1title_'.$lang),
+                        'description1'  => getSettingValue('why1des_'.$lang)
+                    ],
+                    'box2' => [
+                        'icon2' => getSettingValue('why2icon'),
+                        'title2' => getSettingValue('why2title_'.$lang),
+                        'description2'  => getSettingValue('why2des_'.$lang)
+                    ],
+                    'box3' => [
+                        'icon3' => getSettingValue('why3icon'),
+                        'title3' => getSettingValue('why3title_'.$lang),
+                        'description3'  => getSettingValue('why3des_'.$lang)
+                    ],
+                    'box4' => [
+                        'icon4' => getSettingValue('why4icon'),
+                        'title4' => getSettingValue('why4title_'.$lang),
+                        'description4'  => getSettingValue('why4des_'.$lang)
+                    ],
+
+                ]
             ]
         ];
         $resArr = [
             'status' => 'success',
-            'message' => '',
             'data' => $list
         ];
         return response()->json($resArr);

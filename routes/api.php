@@ -64,6 +64,8 @@ Route::group(['middleware'=> ['api']], function () {
     Route::get('/faqs', 'api\StaticPagesController@faqs');
     //static pages for web landing page
     Route::get('/landingPage', 'api\StaticPagesController@landingPage');
+    //products for web landing page
+    Route::get('/products', 'api\ProductsController@index');
 });
 
 
