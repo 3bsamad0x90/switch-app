@@ -18,7 +18,7 @@ class showAccountResource extends JsonResource
         return [
             'id' => $this->id,
             'page_title' => $this->page_title,
-            'url' => $this->url,
+            'url' => is_numeric($this->url) ? 'tel:+2'.$this->url : $this->url,
             'User name' => $this->user()->first()->name . ' ' . $this->user()->first()->familyName,
             'category_name' => $this->category_name,
             'status' => $this->status,

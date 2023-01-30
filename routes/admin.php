@@ -72,6 +72,12 @@ Route::group(['prefix'=>'AdminPanel','middleware'=>['isAdmin','auth']], function
         Route::post('/{id}/edit','admin\creativeController@update')->name('admin.creative.update');
         Route::get('/{id}/delete','admin\creativeController@delete')->name('admin.creative.delete');
     });
+    Route::group(['prefix'=>'applications/mycard'], function(){
+        Route::get('/','admin\mycardController@index')->name('admin.mycard');
+        Route::post('/create','admin\mycardController@store')->name('admin.mycard.store');
+        Route::post('/{id}/edit','admin\mycardController@update')->name('admin.mycard.update');
+        Route::get('/{id}/delete','admin\mycardController@delete')->name('admin.mycard.delete');
+    });
 
 
     Route::group(['prefix'=>'products'], function(){

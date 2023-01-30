@@ -1,9 +1,9 @@
 <!-- BEGIN: Main Menu-->
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header text-center d-flex justify-content-center">
-        
+
             <img src="{{asset(getSettingImageLink('logo'))}}" width="50%" />
-        
+
     </div>
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
@@ -77,7 +77,15 @@
                         <a class="d-flex align-items-center" href="{{ route('admin.creative') }}">
                             <i data-feather="command"></i>
                             <span class="menu-item text-truncate" data-i18n="{{trans('common.creative')}}">
-                                تطبيقات كرييتف
+                                تطبيقات بيزنس
+                            </span>
+                        </a>
+                    </li>
+                    <li @if(isset($active) && $active == 'mycard') class="active" @endif>
+                        <a class="d-flex align-items-center" href="{{ route('admin.mycard') }}">
+                            <i data-feather="command"></i>
+                            <span class="menu-item text-truncate" data-i18n="{{trans('common.mycard')}}">
+                                ماي كارت
                             </span>
                         </a>
                     </li>
