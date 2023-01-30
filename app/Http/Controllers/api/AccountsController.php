@@ -26,7 +26,7 @@ class AccountsController extends Controller
         }
         $rules = [
             'page_title' => 'required|string',
-            'url' => 'required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url',
+            'url' => 'required|regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url',
             'type_id' => 'required',
             'user_id' => 'required|exists:users,id',
             'category_name' => 'required',
@@ -36,13 +36,17 @@ class AccountsController extends Controller
         {
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
-                    'status' => 'failed',
+                    'status' => false,
                     'message' => trans('api.pleaseRecheckYourDetails'),
                     'data' => $error
                 ]);
             }
         }
-        $data = $request->except(['_token']);
+        return is_numeric($request->url);
+        $data = $request->except(['_token','url']);
+        if(is_numeric($request->url)){
+            $data['url'] = 'tel:+2'.$request->url;
+        }
         $account = Accounts::create($data);
         if($account){
             $resArr = [
@@ -108,6 +112,33 @@ class AccountsController extends Controller
             ];
         }
         return response()->json($resArr);
+    }
+    //Delete Account
+    public function deleteAcc(Request $request, Accounts $account){
+        $lang = $request->header('lang');
+        $user = auth()->user();
+        if($lang == ''){
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.pleaseSendLangCode'),
+                'data' => []
+            ];
+            return response()->json($resArr);
+        }
+        if ($account->user_id != $user->id) {
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.YouDoNotHaveAPermissionToThisAccount'),
+            ];
+            return response()->json($resArr);
+        }else{
+            $account->delete();
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.AccountDeletedSuccessfully'),
+            ];
+            return response()->json($resArr);
+        }
     }
 
     public function showAccount(Request $request){
@@ -254,6 +285,5 @@ class AccountsController extends Controller
             ];
         }
         return response()->json($resArr);
-
     }
 }

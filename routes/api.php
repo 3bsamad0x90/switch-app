@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/business', 'api\AppsController@business');
     Route::post('/addAccount', 'api\AccountsController@addAccount');
     Route::post('/updateAcc/{account}', 'api\AccountsController@updateAcc');
+    Route::post('/deleteAcc/{account}', 'api\AccountsController@deleteAcc');
     Route::get('/show', 'api\AccountsController@showAccount');
     Route::post('/changeStatus/{account}', 'api\AccountsController@changeStatus');
     Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
