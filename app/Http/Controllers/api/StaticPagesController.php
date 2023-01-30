@@ -71,8 +71,7 @@ class StaticPagesController extends Controller
             ],
         ];
         $resArr = [
-            'status' => 'success',
-            'message' => '',
+            'status' => true,
             'data' => $list
         ];
         return response()->json($resArr);
@@ -118,12 +117,34 @@ class StaticPagesController extends Controller
                         'title4' => getSettingValue('why4title_'.$lang),
                         'description4'  => getSettingValue('why4des_'.$lang)
                     ],
-
                 ]
-            ]
+                ],
+                'download' => [
+                    'title' => getSettingValue('downloadTitle_'.$lang),
+                    'description' => getSettingValue('downloadDesc_'.$lang),
+                    'image' => getSettingImageLink('downloadImage'),
+                    'link' =>[
+                        'google' => getSettingValue('googlePlayLink'),
+                        'apple' => getSettingValue('appStoreLink'),
+                    ]
+                ],
+                'footer' => [
+                    'contact' => [
+                        'phone' => getSettingValue('phone'),
+                        'email' => getSettingValue('email'),
+                    ],
+                    'socail' => [
+                        'facebook' => getSettingValue('facebook'),
+                        'twitter' => getSettingValue('twitter'),
+                        'linkedin' => getSettingValue('linkedin'),
+                        'gmail' => getSettingValue('gmail'),
+                    ],
+                    'siteDescription' => getSettingValue('siteDescription'),
+                    'logo' => getSettingImageLink('logo'),
+                ]
         ];
         $resArr = [
-            'status' => 'success',
+            'status' => true,
             'data' => $list
         ];
         return response()->json($resArr);

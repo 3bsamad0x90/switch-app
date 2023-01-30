@@ -25,6 +25,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" id="download-tab" data-bs-toggle="tab" href="#download" aria-controls="home" role="tab" aria-selected="true">
+                                <i data-feather="download"></i> التنزيلات
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" id="social-tab" data-bs-toggle="tab" href="#social" aria-controls="social" role="tab" aria-selected="false">
                                 <i data-feather="tool"></i> {{trans('common.socialSettings')}}
                             </a>
@@ -50,6 +55,9 @@
                         </div>
                         <div class="tab-pane" id="why" aria-labelledby="why-tab" role="tabpanel">
                             @include('AdminPanel.settings.includes.why')
+                        </div>
+                        <div class="tab-pane" id="download" aria-labelledby="download-tab" role="tabpanel">
+                            @include('AdminPanel.settings.includes.download')
                         </div>
                         <div class="tab-pane" id="social" aria-labelledby="social-tab" role="tabpanel">
                             @include('AdminPanel.settings.includes.social')
