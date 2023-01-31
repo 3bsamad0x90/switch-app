@@ -37,5 +37,8 @@ return [
     'AccountDeletedSuccessfully' => 'تم حذف الحساب بنجاح',
     'YouHaveAnOrdersYouCanNotDeleteYourAccount'=> 'لديك طلبات قيد التنفيذ , لا يمكنك حذف حسابك',
     'youDontHaveAnyAccount' => 'لا يوجد لديك أي حساب',
-    'YouDoNotHaveAPermissionToThisAccount' => 'لا يوجد ليك الصلاحيه لحذف هذا الحساب'
+    'YouDoNotHaveAPermissionToThisAccount' => 'لا يوجد ليك الصلاحيه لحذف هذا الحساب',
+    'reset_pass_email' => 'إعادة تعيين كلمة المرور',
+    'reset_pass' => 'إعادة تعيين كلمة المرور',
+    'reset_pass_link' => 'إعادة تعيين كلمة المرور',
 ];

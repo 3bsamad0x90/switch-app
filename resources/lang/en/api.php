@@ -35,4 +35,7 @@ return [
     'YouHaveAnOrdersYouCanNotDeleteYourAccount' => 'You Have An Orders You Can Not Delete Your Account',
     'youDontHaveAnyAccount' => 'you Don\'t Have Any Account',
     'YouDoNotHaveAPermissionToThisAccount' => 'You Do Not Have A Permission To This Account',
+    'reset_pass_email' => 'Reset Password',
+    'reset_pass' => 'Reset Password',
+    'reset_pass_link' => 'Reset Password Link',
 ];

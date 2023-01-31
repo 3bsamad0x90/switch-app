@@ -19,6 +19,7 @@ class ProductsResource extends JsonResource
             'id' => $this->id,
             'productName' => $this['productName_'.$lang] != '' ? $this['productName_'.$lang] : $this['productName_en'],
             'price' => $this['price'],
+            'description' => 'description for product',
             'image' => asset('public/uploads/products/'.$this->id.'/'.$this->image),
         ];
     }

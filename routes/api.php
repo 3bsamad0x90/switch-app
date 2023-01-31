@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//Forget_Password
+Route::post('forget/password/email','api\ForgetPasswordController@PasswordReset');
+Route::post('checkcode','api\ForgetPasswordController@checkcode');
+Route::post('reset/password', 'api\ForgetPasswordController@ResetPasswordForm');
+
+
 Route::post('/user/register', 'api\AuthinticationController@register');
 Route::post('/user/login', 'api\AuthinticationController@login');
 
