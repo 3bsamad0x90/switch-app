@@ -14,26 +14,21 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountsController extends Controller
 {
-    public function addAccount(Request $request){
+    public function addAccount(Request $request)
+    {
         $lang = $request->header('lang');
-        if($lang == ''){
-            $resArr = [
-                'status' => 'failed',
-                'message' => trans('api.pleaseSendLangCode'),
-                'data' => []
-            ];
-            return response()->json($resArr);
+        $user = auth()->user();
+        if (checkUserForApi($lang, $user->id) !== true) {
+            return checkUserForApi($lang, $user->id);
         }
         $rules = [
             'page_title' => 'required|string',
-            'url' => 'required|regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url',
+            'url' => 'required|unique:accounts,url', 'regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i',
             'type_id' => 'required',
-            'user_id' => 'required|exists:users,id',
             'category_name' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
                     'status' => false,
@@ -42,39 +37,84 @@ class AccountsController extends Controller
                 ]);
             }
         }
-        return is_numeric($request->url);
-        $data = $request->except(['_token','url']);
-        if(is_numeric($request->url)){
-            $data['url'] = 'tel:+2'.$request->url;
-        }
+        $accounts = Accounts::get();
+        $account = $accounts->last();
+        $position = $account->id + 1;
+        $data = $request->except(['_token']);
+        $data['position'] = $position;
+        $data['user_id'] = $user->id;
         $account = Accounts::create($data);
-        if($account){
+        if ($account->save()) {
             $resArr = [
-                'status' => 'success',
+                'status' => true,
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
-                'data' => []
+                'data' => $account
             ];
-        }else{
+        } else {
             $resArr = [
-                'status' => 'failed',
+                'status' => false,
                 'message' => trans('api.yourDataHasBeenSentFailed'),
-                'data' => []
             ];
         }
         return response()->json($resArr);
     }
-    //update Account
-    public function updateAcc(Request $request, Accounts $account){
+    //Reposition Accounts
+    public function reposition(Request $request)
+    {
         $lang = $request->header('lang');
         $user = auth()->user();
-        if($lang == ''){
+        if (checkUserForApi($lang, $user->id) !== true) {
+            return checkUserForApi($lang, $user->id);
+        }
+        $rules = [
+            'account1' => 'required',
+            'account2' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            foreach ((array)$validator->errors() as $error) {
+                return response()->json([
+                    'status' => false,
+                    'message' => trans('api.pleaseRecheckYourDetails'),
+                    'data' => $error
+                ]);
+            }
+        }
+        $account1 = Accounts::find($request->account1);
+        $account2 = Accounts::find($request->account2);
+        $position1 = $account1->position;
+        $position2 = $account2->position;
+        $account1->position = $position2;
+        $account2->position = $position1;
+        if ($account1->save() && $account2->save()) {
             $resArr = [
-                'status' => 'failed',
+                'status' => true,
+                'message' => trans('api.yourDataHasBeenSentSuccessfully'),
+                'account1' => $account1,
+                'account2' => $account2
+            ];
+        } else {
+            $resArr = [
+                'status' => false,
+                'message' => trans('api.yourDataHasBeenSentFailed'),
+            ];
+        }
+        return response()->json($resArr);
+    }
+    // Update Account
+    public function updateAcc(Request $request, Accounts $account)
+    {
+        $lang = $request->header('lang');
+        $user = auth()->user();
+        if ($lang == '') {
+            $resArr = [
+                'status' => false,
                 'message' => trans('api.pleaseSendLangCode'),
                 'data' => []
             ];
             return response()->json($resArr);
         }
+
         if ($account->user_id != $user->id) {
             $resArr = [
                 'status' => false,
@@ -84,28 +124,27 @@ class AccountsController extends Controller
         }
         $rules = [
             'page_title' => 'required|string',
-            'url' => 'required','regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url,'.$account->id,
+            'url' => 'required', 'regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i|unique:accounts,url,' . $account->id,
         ];
         $validator = Validator::make($request->all(), $rules);
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
-                    'status' => 'failed',
+                    'status' => false,
                     'message' => trans('api.pleaseRecheckYourDetails'),
                     'data' => $error
                 ]);
             }
         }
-        $data = $request->except('_token');
-        if($account){
+        $data = $request->except(['_token']);
+        if ($account) {
             $account->update($data);
             $resArr = [
                 'status' => true,
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
                 'data' => $account
             ];
-        }else{
+        } else {
             $resArr = [
                 'status' => false,
                 'message' => trans('api.yourDataHasBeenSentFailed'),
@@ -114,10 +153,11 @@ class AccountsController extends Controller
         return response()->json($resArr);
     }
     //Delete Account
-    public function deleteAcc(Request $request, Accounts $account){
+    public function deleteAcc(Request $request, Accounts $account)
+    {
         $lang = $request->header('lang');
         $user = auth()->user();
-        if($lang == ''){
+        if ($lang == '') {
             $resArr = [
                 'status' => false,
                 'message' => trans('api.pleaseSendLangCode'),
@@ -131,7 +171,7 @@ class AccountsController extends Controller
                 'message' => trans('api.YouDoNotHaveAPermissionToThisAccount'),
             ];
             return response()->json($resArr);
-        }else{
+        } else {
             $account->delete();
             $resArr = [
                 'status' => true,
@@ -141,34 +181,60 @@ class AccountsController extends Controller
         }
     }
 
-    public function showAccount(Request $request){
+    public function showAccount(Request $request)
+    {
         $lang = $request->header('lang');
-        if($lang == ''){
+        if ($lang == '') {
             $resArr = [
-                'status' => 'failed',
+                'status' => false,
+                'message' => trans('api.pleaseSendLangCode'),
+            ];
+            return response()->json($resArr);
+        }
+        $user = User::find(auth()->user()->id);
+        $accounts = Accounts::where('user_id', $user->id)->orderBy('position', 'asc')->get();
+        if ($accounts == '[]') {
+            $resArr = [
+                'status' => true,
+                'message' => trans('api.youDontHaveAnyAccount'),
+            ];
+            return response()->json($resArr);
+        } else {
+            return response()->json(['accounts' => showAccountResource::collection($accounts)]);
+        }
+    }
+    public function editAccount(Request $request, User $user)
+    {
+        $lang = $request->header('lang');
+        if ($lang == '') {
+            $resArr = [
+                'status' => false,
                 'message' => trans('api.pleaseSendLangCode'),
                 'data' => []
             ];
             return response()->json($resArr);
         }
-        $user = User::find(auth()->user()->id);
-        $accounts = Accounts::where('user_id', $user->id)->get();
-        if($accounts == '[]'){
+        if (!$user) {
+            return $user;
             $resArr = [
                 'status' => false,
-                'message' => trans('api.youDontHaveAnyAccount'),
+                'message' => trans('api.yourDataHasBeenSentFailed'),
                 'data' => []
             ];
             return response()->json($resArr);
-        }else{
-            return response()->json(['accounts'=>showAccountResource::collection($accounts)]);
+        } else {
+            return response()->json([
+                'user' => new UserResource($user),
+                'qrcode' => asset('uploads/qrcodes/user-' . $user->id . '.png')
+            ]);
         }
     }
     //Change Status
-    public function changeStatus(Request $request, Accounts $account){
+    public function changeStatus(Request $request, Accounts $account)
+    {
         $lang = $request->header('lang');
         $user = auth()->user();
-        if($lang == ''){
+        if ($lang == '') {
             $resArr = [
                 'status' => false,
                 'message' => trans('api.pleaseSendLangCode'),
@@ -184,13 +250,13 @@ class AccountsController extends Controller
             return response()->json($resArr);
         }
         $account->status = $request->status;
-        if($account->update()){
+        if ($account->update()) {
             $resArr = [
                 'status' => true,
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
                 'data' => $account
             ];
-        }else{
+        } else {
             $resArr = [
                 'status' => false,
                 'message' => trans('api.yourDataHasBeenSentFailed'),
@@ -198,34 +264,9 @@ class AccountsController extends Controller
         }
         return response()->json($resArr);
     }
-
-    public function editAccount(Request $request, User $user ){
-        $lang = $request->header('lang');
-        if($lang == ''){
-            $resArr = [
-                'status' => 'failed',
-                'message' => trans('api.pleaseSendLangCode'),
-                'data' => []
-            ];
-            return response()->json($resArr);
-        }
-        if(!$user){
-            return $user;
-            $resArr = [
-                'status' => 'failed',
-                'message' => trans('api.yourDataHasBeenSentFailed'),
-                'data' => []
-            ];
-            return response()->json($resArr);
-        }else{
-             return response()->json([
-                'user' => new UserResource($user),
-                'qrcode' => asset('uploads/qrcodes/user-'.$user->id.'.svg')
-            ]);
-        }
-    }
-
-    public function updateAccount(Request $request){
+    // update User Account
+    public function updateAccount(Request $request)
+    {
         $lang = $request->header('lang');
         $user = User::find(auth()->user()->id);
         if (checkUserForApi($lang, $user->id) !== true) {
@@ -234,52 +275,51 @@ class AccountsController extends Controller
         $rules = [
             'name' => 'nullable',
             'familyName' => 'nullable',
-            'email' => 'nullable|email|unique:users,email,'.$user->id,
-            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|unique:users,phone,'.$user->id,
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|unique:users,phone,' . $user->id,
             'job_title' => 'nullable|string|max:255',
             'password' => 'nullable',
             'bio' => 'nullable|string|max:255',
-            'image' => 'nullable|mimes:jpeg,jpg,png',
+            'image' => 'nullable|image',
             'background_image' => 'nullable|image'
         ];
-        $validator=Validator::make($request->all(),$rules);
-        if($validator->fails())
-        {
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
-                    'status' => 'failed',
+                    'status' => false,
                     'message' => trans('api.pleaseRecheckYourDetails'),
                     'data' => $error
                 ]);
             }
         }
-        $data = $request->except(['_token','password','image','background_image']);
+        $data = $request->except(['_token', 'password', 'image', 'background_image']);
         if ($request['password'] != '') {
             $data['password'] = bcrypt($request['password']);
         }
         $user = User::find($user->id);
         if ($request->image != '') {
             if ($user->image != '') {
-                delete_image('users/'.$user->id , $user->image);
+                delete_image('users/' . $user->id, $user->image);
             }
-            $data['image'] = upload_image_without_resize('users/'.$user->id , $request->image );
+            $data['image'] = upload_image_without_resize('users/' . $user->id, $request->image);
         }
         if ($request->background_image != '') {
             if ($user->background_image != '') {
-                delete_image('users/'.$user->id , $user->background_image);
+                delete_image('users/' . $user->id, $user->background_image);
             }
-            $data['background_image'] = upload_image_without_resize('users/'.$user->id , $request->background_image );
+            $data['background_image'] = upload_image_without_resize('users/' . $user->id, $request->background_image);
         }
 
         if ($user->update($data)) {
             $resArr = [
-                'status' => 'success',
+                'status' => true,
                 'message' => trans('api.yourDataHasBeenSavedSuccessfully'),
                 'data' => $user->apiData($lang)
             ];
         } else {
             $resArr = [
-                'status' => 'failed',
+                'status' => false,
                 'message' => trans('api.someThingWentWrong'),
                 'data' => []
             ];

@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/updateAcc/{account}', 'api\AccountsController@updateAcc');
     Route::post('/deleteAcc/{account}', 'api\AccountsController@deleteAcc');
     Route::get('/show', 'api\AccountsController@showAccount');
+    Route::post('/reOrderAccounts', 'api\AccountsController@reOrderAccounts');
     Route::post('/changeStatus/{account}', 'api\AccountsController@changeStatus');
     Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
 
