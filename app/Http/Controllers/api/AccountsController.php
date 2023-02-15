@@ -67,8 +67,8 @@ class AccountsController extends Controller
             return checkUserForApi($lang, $user->id);
         }
         $rules = [
-            'account1' => 'required',
-            'account2' => 'required',
+            'accountId' => 'required',
+            'position' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -80,18 +80,21 @@ class AccountsController extends Controller
                 ]);
             }
         }
-        $account1 = Accounts::find($request->account1);
-        $account2 = Accounts::find($request->account2);
-        $position1 = $account1->position;
-        $position2 = $account2->position;
-        $account1->position = $position2;
-        $account2->position = $position1;
-        if ($account1->save() && $account2->save()) {
+        $account = Accounts::find($request->accountId);
+        $account['position'] = $request->position;
+        $account->update();
+        $accounts = Accounts::where('user_id', $user->id)->where('position', '>' , $request->position)->get();
+        $i = $request->position + 1;
+        foreach($accounts as $account) {
+            $account['position'] = $request->position + $i++;
+            $account->update();
+        }
+        $Allaccounts = Accounts::where('user_id', $user->id)->orderBy('position', 'asc')->get();
+        if ($accounts) {
             $resArr = [
                 'status' => true,
                 'message' => trans('api.yourDataHasBeenSentSuccessfully'),
-                'account1' => $account1,
-                'account2' => $account2
+                'accounts' => $Allaccounts
             ];
         } else {
             $resArr = [

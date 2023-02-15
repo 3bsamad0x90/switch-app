@@ -14,12 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 //Forget_Password
-Route::post('forget/password/email','api\ForgetPasswordController@PasswordReset');
-Route::post('checkcode','api\ForgetPasswordController@checkcode');
+Route::post('forget/password/email', 'api\ForgetPasswordController@PasswordReset');
+Route::post('checkcode', 'api\ForgetPasswordController@checkcode');
 Route::post('reset/password', 'api\ForgetPasswordController@ResetPasswordForm');
-
 
 Route::post('/user/register', 'api\AuthinticationController@register');
 Route::post('/user/login', 'api\AuthinticationController@login');
@@ -29,7 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['middleware' => ['auth:sanctum']], function(){
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/orders', 'api\OrdersController@orders');
     Route::post('/makeorder', 'api\OrdersController@index');
     Route::get('/products', 'api\ProductsController@index');
@@ -41,9 +39,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/updateAcc/{account}', 'api\AccountsController@updateAcc');
     Route::post('/deleteAcc/{account}', 'api\AccountsController@deleteAcc');
     Route::get('/show', 'api\AccountsController@showAccount');
-    Route::post('/reOrderAccounts', 'api\AccountsController@reOrderAccounts');
+    Route::post('/reposition', 'api\AccountsController@reposition');
     Route::post('/changeStatus/{account}', 'api\AccountsController@changeStatus');
-    Route::post('/sendContactMessage','api\ContactMessagesController@sendContactMessage');
+    Route::post('/sendContactMessage', 'api\ContactMessagesController@sendContactMessage');
 
     //edit account
     Route::get('/editAccount/{user}', 'api\AccountsController@editAccount');
@@ -56,18 +54,19 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/serialNumber', 'api\SerialNumberController@serialNumber');
 });
 
-Route::group(['middleware'=> ['api']], function () {
 
-    Route::get('/user/{id}','api\UserController@myProfile');
+Route::group(['middleware' => ['api']], function () {
 
-    Route::post('/sendmessage','api\ContactMessagesController@sendContactMessage');
+    Route::get('/user/{id}', 'api\UserController@myProfile');
 
-    Route::get('/exchange','api\ContactMessagesController@exchange');
-    Route::post('/exchangeStatus/{id}','api\ContactMessagesController@exchangeStatus');
-    Route::get('/userconnection','api\ContactMessagesController@userconnection');
-    Route::post('/DeleteUserConnection/{contact}','api\ContactMessagesController@DeleteUserConnection');
-    Route::post('/favorite/{id}','api\ContactMessagesController@favorite');
-    Route::get('/favoriteShow','api\ContactMessagesController@favoriteShow');
+    Route::get('/sendmessage', 'api\ContactMessagesController@sendContactMessage');
+
+    Route::get('/exchange', 'api\ContactMessagesController@exchange');
+    Route::post('/exchangeStatus/{id}', 'api\ContactMessagesController@exchangeStatus');
+    Route::get('/userconnection', 'api\ContactMessagesController@userconnection');
+    Route::post('/DeleteUserConnection/{contact}', 'api\ContactMessagesController@DeleteUserConnection');
+    Route::post('/favorite/{id}', 'api\ContactMessagesController@favorite');
+    Route::get('/favoriteShow', 'api\ContactMessagesController@favoriteShow');
     //socail media
     Route::get('/media', 'api\StaticPagesController@media');
     Route::get('/faqs', 'api\StaticPagesController@faqs');
@@ -76,5 +75,3 @@ Route::group(['middleware'=> ['api']], function () {
     //products for web landing page
     Route::get('/products', 'api\ProductsController@index');
 });
-
-
